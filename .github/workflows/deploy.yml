@@ -18,6 +18,6 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: ${{ github.ref_name == 'main' && 'public_html/' || 'public_html/dev-preview/' }}
           protocol: ftps
-          security: strict
+#          security: strict
           port: 21
           local-dir: ./wp-content/
