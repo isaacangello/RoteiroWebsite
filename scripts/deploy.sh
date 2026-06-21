@@ -97,6 +97,35 @@ if ! command -v lftp &>/dev/null; then
 fi
 ok "lftp disponível"
 
+# ─── Gera wp-config.php para deploy ──────────────────
+log "Gerando wp-config.php para deploy..."
+DEPLOY_WP_CONFIG="$WORDPRESS_DIR/wp-config.php"
+cat > "$DEPLOY_WP_CONFIG" <<WPCONFIG
+<?php
+define('DB_NAME', '${DB_NAME:-roteirot_wordpress}');
+define('DB_USER', '${DB_USER:-roteirot_user}');
+define('DB_PASSWORD', '${DB_PASSWORD:-SUA_SENHA_AQUI}');
+define('DB_HOST', 'localhost');
+define('DB_CHARSET', 'utf8mb4');
+define('DB_COLLATE', '');
+
+\$table_prefix = 'rw_';
+
+define('AUTH_KEY',        '$(openssl rand --hex 48 2>/dev/null)');
+define('SECURE_AUTH_KEY', '$(openssl rand --hex 48 2>/dev/null)');
+define('LOGGED_IN_KEY',   '$(openssl rand --hex 48 2>/dev/null)');
+define('NONCE_KEY',       '$(openssl rand --hex 48 2>/dev/null)');
+define('AUTH_SALT',       '$(openssl rand --hex 48 2>/dev/null)');
+define('SECURE_AUTH_SALT','$(openssl rand --hex 48 2>/dev/null)');
+define('LOGGED_IN_SALT',  '$(openssl rand --hex 48 2>/dev/null)');
+define('NONCE_SALT',      '$(openssl rand --hex 48 2>/dev/null)');
+
+if (!defined('ABSPATH')) define('ABSPATH', __DIR__ . '/');
+
+require_once ABSPATH . 'wp-settings.php';
+WPCONFIG
+ok "wp-config.php gerado"
+
 # ─── Deploy via FTPS ───────────────────────────────────
 log "Enviando para $TARGET..."
 
