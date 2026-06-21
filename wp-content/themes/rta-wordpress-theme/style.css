@@ -1,0 +1,408 @@
+/*
+Theme Name: RTA Aposentados
+Theme URI: https://example.com/rta
+Author: RTA
+Description: Tema WordPress para Roteiro Turístico dos Aposentados.
+Version: 1.0.0
+Text Domain: rta
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;600;700;800&display=swap');
+
+:root {
+  --rta-red: #c40000;
+  --rta-red-dark: #7a0000;
+  --rta-red-nav: #8b0000;
+  --rta-orange: #ff6600;
+  --rta-white: #ffffff;
+  --rta-text: #333333;
+  --rta-border: #d9d9d9;
+  --rta-max-width: 980px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Montserrat, Arial, Helvetica, sans-serif;
+  color: var(--rta-text);
+  background: var(--rta-white);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.screen-reader-text {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  word-wrap: normal !important;
+}
+
+.rta-site {
+  min-width: 980px;
+}
+
+.rta-top-bar {
+  background: var(--rta-red);
+  height: 8px;
+}
+
+.rta-header {
+  background: linear-gradient(180deg, var(--rta-red) 0%, #b00000 100%);
+  padding: 18px 0 0;
+}
+
+.rta-header__inner {
+  width: var(--rta-max-width);
+  margin: 0 auto;
+  background: var(--rta-white);
+  border: 1px solid #eee;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 22px;
+}
+
+.rta-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rta-logo img,
+.rta-logo__fallback {
+  width: 120px;
+  height: 120px;
+}
+
+.rta-logo__fallback {
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ff4d4d, var(--rta-red-dark));
+  border: 4px solid #fff;
+  box-shadow: 0 0 0 3px var(--rta-red), inset 0 0 18px rgba(0, 0, 0, 0.35);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 2.4rem;
+  color: #ffd700;
+  text-shadow: 0 2px 0 #8b0000, 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+.rta-branding__title {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--rta-red);
+  text-shadow:
+    1px 1px 0 #fff,
+    -1px -1px 0 #fff,
+    1px -1px 0 #fff,
+    -1px 1px 0 #fff,
+    0 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+.rta-branding__tagline {
+  margin: 8px 0 0;
+  font-family: "Great Vibes", cursive;
+  font-size: 1.65rem;
+  color: var(--rta-red);
+}
+
+.rta-nav {
+  background: linear-gradient(180deg, #a00000 0%, var(--rta-red) 55%, #8b0000 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.rta-nav__inner {
+  width: var(--rta-max-width);
+  margin: 0 auto;
+}
+
+.rta-menu,
+.rta-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.rta-menu {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+
+.rta-menu > li {
+  display: flex;
+  align-items: center;
+}
+
+.rta-menu > li + li {
+  border-left: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.rta-menu > li > a {
+  display: block;
+  padding: 7px 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--rta-white);
+  white-space: nowrap;
+}
+
+.rta-menu > li.current-menu-item > a,
+.rta-menu > li.current_page_item > a {
+  color: var(--rta-orange);
+  text-shadow: 0 0 6px rgba(255, 102, 0, 0.8);
+}
+
+.rta-menu > li > a:hover,
+.rta-menu > li > a:focus {
+  color: var(--rta-orange);
+}
+
+.rta-main {
+  width: var(--rta-max-width);
+  margin: 0 auto;
+  padding: 18px 0 40px;
+}
+
+.rta-home-grid {
+  display: grid;
+  grid-template-columns: 180px 1fr 180px;
+  gap: 24px;
+  align-items: start;
+}
+
+.rta-sidebar-left,
+.rta-sidebar-right {
+  font-size: 0.75rem;
+}
+
+.rta-sidebar-left__label {
+  color: var(--rta-orange);
+  font-size: 0.85rem;
+  margin: 0 0 12px;
+  text-transform: lowercase;
+}
+
+.rta-partner {
+  margin-bottom: 18px;
+}
+
+.rta-partner__name {
+  font-weight: 700;
+  color: #0047ab;
+  font-size: 1.35rem;
+  line-height: 1;
+  margin: 0 0 4px;
+}
+
+.rta-partner__name--aafbb {
+  letter-spacing: -0.04em;
+}
+
+.rta-partner__desc {
+  margin: 0;
+  color: #0047ab;
+  font-size: 0.68rem;
+  line-height: 1.25;
+}
+
+.rta-partner__logo-box {
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, #005bbb, #003f88);
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 6px;
+}
+
+.rta-partner__logo-box span {
+  color: #ffd700;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.rta-center {
+  text-align: center;
+}
+
+.rta-counter {
+  display: inline-flex;
+  gap: 2px;
+  margin-bottom: 6px;
+}
+
+.rta-counter__digit {
+  min-width: 22px;
+  padding: 4px 3px;
+  background: #111;
+  color: #fff;
+  font-family: "Courier New", monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  border: 1px solid #444;
+}
+
+.rta-counter__caption {
+  margin: 0 0 18px;
+  font-size: 0.78rem;
+  font-style: italic;
+}
+
+.rta-counter__credit {
+  display: block;
+  font-size: 0.62rem;
+  color: #666;
+  margin-top: 4px;
+}
+
+.rta-hero-logo {
+  width: 420px;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.rta-hero-logo__fallback {
+  width: 420px;
+  height: 210px;
+  margin: 0 auto;
+  border-radius: 210px 210px 0 0;
+  background: radial-gradient(circle at 50% 100%, #ff4d4d, var(--rta-red-dark));
+  border: 8px solid #fff;
+  box-shadow: 0 0 0 4px var(--rta-red);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.rta-hero-logo__fallback span {
+  margin-top: 70px;
+  font-size: 5rem;
+  font-weight: 800;
+  color: #ffd700;
+  text-shadow: 0 3px 0 #8b0000;
+}
+
+.rta-widget {
+  margin-bottom: 16px;
+  border: 1px solid var(--rta-border);
+  background: #fafafa;
+}
+
+.rta-widget__header {
+  background: #ececec;
+  padding: 6px 8px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.rta-widget__body {
+  padding: 10px 8px;
+}
+
+.rta-clock {
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.08em;
+}
+
+.rta-weather__city {
+  font-weight: 700;
+  font-size: 0.72rem;
+  margin: 0 0 4px;
+}
+
+.rta-weather__date,
+.rta-weather__temp,
+.rta-weather__desc {
+  margin: 0 0 4px;
+  font-size: 0.68rem;
+  line-height: 1.3;
+}
+
+.rta-weather__video {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 4px 8px;
+  background: #ffd700;
+  color: #000;
+  font-size: 0.62rem;
+  font-weight: 700;
+}
+
+.rta-content-area {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--rta-border);
+}
+
+.rta-footer {
+  background: var(--rta-red-dark);
+  color: var(--rta-white);
+  text-align: center;
+  padding: 14px 12px;
+  font-size: 0.75rem;
+}
+
+@media (max-width: 1024px) {
+  .rta-site {
+    min-width: 0;
+  }
+
+  .rta-header__inner,
+  .rta-nav__inner,
+  .rta-main {
+    width: calc(100% - 24px);
+  }
+
+  .rta-home-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rta-home-content {
+  text-align: left;
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
+.rta-home-content h2,
+.rta-home-content h3 {
+  color: var(--rta-red);
+  margin: 1.2rem 0 0.6rem;
+}
+
+.rta-home-content ul {
+  padding-left: 1.2rem;
+}
+
+.rta-home-content li {
+  margin-bottom: 0.45rem;
+}

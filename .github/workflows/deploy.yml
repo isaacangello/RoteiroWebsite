@@ -1,0 +1,23 @@
+name: Deploy via FTP
+
+on:
+  push:
+    branches: [main, develop]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 📂 Deploy to FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ github.ref_name == 'main' && 'public_html/' || 'public_html/dev-preview/' }}
+          protocol: ftps
+          security: explicit
+          port: 21
+          local-dir: ./wp-content/

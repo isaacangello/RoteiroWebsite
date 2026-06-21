@@ -1,0 +1,10 @@
+.env
+db_data/
+wp-content/uploads/*
+!wp-content/uploads/.gitkeep
+wp-content/languages/*
+!wp-content/languages/.gitkeep
+wp-content/upgrade/
+*.log
+.DS_Store
+.idea/
