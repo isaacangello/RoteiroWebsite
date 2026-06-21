@@ -39,23 +39,32 @@ case "$1" in
   *)       usage ;;
 esac
 
+# ─── Utilitário para ler .env ────────────────────────
+parse_env() {
+  local file="$1"
+  while IFS='=' read -r key value; do
+    if [[ -n "$key" && "$key" != \#* ]]; then
+      value="${value%\"}"
+      value="${value#\"}"
+      value="${value%\'}"
+      value="${value#\'}"
+      export "$key=$value"
+    fi
+  done < "$file"
+}
+
 # ─── Carrega credenciais FTP ──────────────────────────
 FTP_ENV="$PROJECT_DIR/.env.ftp"
 [ ! -f "$FTP_ENV" ] && fail "Arquivo .env.ftp não encontrado. Crie a partir de .env.ftp.example"
-
-while IFS='=' read -r key value; do
-  if [[ -n "$key" && "$key" != \#* ]]; then
-    value="${value%\"}"
-    value="${value#\"}"
-    value="${value%\'}"
-    value="${value#\'}"
-    export "$key=$value"
-  fi
-done < "$FTP_ENV"
+parse_env "$FTP_ENV"
 
 : "${FTP_HOST:?FTP_HOST não definido}"
 : "${FTP_USERNAME:?FTP_USERNAME não definido}"
 : "${FTP_PASSWORD:?FTP_PASSWORD não definido}"
+
+# ─── Carrega credenciais do banco ────────────────────
+DOT_ENV="$PROJECT_DIR/.env"
+[ -f "$DOT_ENV" ] && parse_env "$DOT_ENV"
 
 # ─── Verifica container ───────────────────────────────
 log "Verificando container roteiro-wordpress..."
@@ -78,7 +87,7 @@ mkdir -p "$DB_DIR"
 DB_FILE="roteiro_website_$(date +%Y-%m-%d_%H-%M-%S).sql.gz"
 
 docker exec roteiro-db \
-  mariadb-dump -u wordpress -psecret roteiro_website \
+  mariadb-dump -u "${DB_USER:-roteirot_user}" -p"${DB_PASSWORD:-SUA_SENHA_AQUI}" "${DB_NAME:-roteirot_wordpress}" \
   | gzip > "$DB_DIR/$DB_FILE"
 ok "Banco exportado: database/$DB_FILE"
 
