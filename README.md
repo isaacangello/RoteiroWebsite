@@ -84,11 +84,62 @@ main ── git checkout main → git merge develop → git push
 
 A pasta `public_html/dev-preview/` deve existir no FTP antes do primeiro deploy.
 
+## Deploy Manual via Script
+
+Faz backup do banco + copia o WordPress core + envia tudo via FTP.
+
+### Configurar credenciais
+
+```bash
+cp .env.ftp.example .env.ftp
+# Edite .env.ftp com suas credenciais (já está no .gitignore)
+```
+
+### Usar
+
+```bash
+# Deploy para preview (develop)
+./scripts/deploy.sh preview
+
+# Deploy para produção
+./scripts/deploy.sh prod
+```
+
+O script:
+1. Copia o WordPress core do container para `wordpress/`
+2. Exporta o banco MySQL para `database/roteiro_website_<data>.sql.gz`
+3. Envia tudo via FTPS para a hospedagem
+
+### Apenas copiar o core (sem deploy)
+
+```bash
+./scripts/update-core.sh
+```
+
+### Apenas exportar o banco
+
+O banco é exportado automaticamente durante o deploy em `database/`.
+
+## Estrutura de Diretórios
+
+```
+roteirowebsite/
+├── wordpress/           ← Cópia do WP core (gitignorado)
+├── wp-content/          ← Temas/plugins/personalizações
+├── database/            ← Exports SQL (gitignorado)
+├── exports/             ← Exportação WXR de conteúdo
+├── scripts/
+│   ├── deploy.sh        ← Deploy completo via FTP
+│   └── update-core.sh   ← Apenas copiar core do container
+├── .env.ftp             ← Credenciais FTP (gitignorado)
+└── .github/workflows/   ← GitHub Actions
+```
+
 ## Ambiente Local vs Produção
 
 | Item | Local (Docker) | Produção (Hospedagem) |
 |---|---|---|
-| WordPress Core | Imagem oficial | Instalação da hospedagem |
-| Temas/Plugins | Montados por volume + imagem | Enviados via FTP |
-| Banco | MariaDB no container | Banco da hospedagem |
+| WordPress Core | Imagem oficial | Enviado via script/FTP |
+| Temas/Plugins | Montados por volume | Enviados via Git Actions |
+| Banco | MariaDB no container | Exportado via script |
 | Uploads | Volume local | Gerenciado no próprio site |

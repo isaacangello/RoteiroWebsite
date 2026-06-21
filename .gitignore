@@ -1,10 +1,14 @@
 .env
+.env.ftp
 db_data/
 wp-content/uploads/*
 !wp-content/uploads/.gitkeep
 wp-content/languages/*
 !wp-content/languages/.gitkeep
 wp-content/upgrade/
+wordpress/
+database/*
+!database/.gitkeep
 *.log
 .DS_Store
 .idea/
