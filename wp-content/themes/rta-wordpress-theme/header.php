@@ -56,7 +56,7 @@
 				'container'      => false,
 				'menu_class'     => 'rta-menu',
 				'fallback_cb'    => 'rta_default_menu',
-				'depth'          => 1,
+				'depth'          => 2,
 			)
 		);
 		?>

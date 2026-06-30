@@ -26,6 +26,21 @@ docker compose up -d
 | WordPress | http://localhost:8080 |
 | phpMyAdmin | http://localhost:8081 |
 
+### Banco remoto (produção)
+
+MySQL remoto ativo em `148.72.177.185`:
+
+| Parâmetro | Valor |
+|---|---|
+| Host | `148.72.177.185` |
+| Database | `roteirot_wordpress` |
+| Usuário | `roteirot_user` |
+| Senha | `SUA_SENHA_AQUI` |
+
+```bash
+mysql -h 148.72.177.185 -u roteirot_user -p roteirot_wordpress
+```
+
 ### Parar ambiente
 
 ```bash

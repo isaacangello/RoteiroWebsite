@@ -125,14 +125,12 @@ img {
   border-radius: 50%;
   object-fit: cover;
   border: 4px solid #fff;
-  box-shadow: 0 0 0 3px var(--rta-red), inset 0 0 18px rgba(0, 0, 0, 0.35);
 }
 
 .rta-logo__fallback {
   border-radius: 50%;
   background: radial-gradient(circle at 30% 30%, #ff4d4d, var(--rta-red-dark));
   border: 4px solid #fff;
-  box-shadow: 0 0 0 3px var(--rta-red), inset 0 0 18px rgba(0, 0, 0, 0.35);
   display: grid;
   place-items: center;
   font-weight: 800;
@@ -214,6 +212,110 @@ img {
 .rta-menu > li > a:hover,
 .rta-menu > li > a:focus {
   color: var(--rta-orange);
+}
+
+/* ======================================================
+   Dropdown / Submenu
+   ====================================================== */
+
+.rta-menu .menu-item-has-children {
+  position: relative;
+}
+
+.rta-menu .sub-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 999;
+  min-width: 220px;
+  background: linear-gradient(180deg, #a00000 0%, var(--rta-red) 55%, #8b0000 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: none;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  list-style: none;
+  margin: 0;
+  padding: 6px 0;
+}
+
+/* Hover bridge: transparent gap so mouse can move from parent into submenu */
+.rta-menu .sub-menu::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 0;
+  right: 0;
+  height: 10px;
+}
+
+.rta-menu .menu-item-has-children:hover > .sub-menu,
+.rta-menu .menu-item-has-children:focus-within > .sub-menu,
+.rta-menu .menu-item-has-children.rta-menu-open > .sub-menu {
+  display: block !important;
+}
+
+.rta-menu .sub-menu li {
+  display: block;
+  border: none;
+}
+
+.rta-menu .sub-menu a {
+  display: block;
+  padding: 8px 14px;
+  font-size: clamp(0.6rem, 1vw, 0.7rem);
+  font-weight: 500;
+  color: var(--rta-white);
+  white-space: nowrap;
+  background: transparent;
+  border: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.rta-menu .sub-menu a:hover,
+.rta-menu .sub-menu a:focus {
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--rta-orange);
+}
+
+.rta-menu .sub-menu .current-menu-item > a {
+  color: var(--rta-orange);
+  text-shadow: 0 0 6px rgba(255, 102, 0, 0.8);
+}
+
+/* Downward arrow indicator for items with children */
+.rta-menu .menu-item-has-children > a::after {
+  content: " ▾";
+  font-size: 0.65em;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+@media (max-width: 1024px) {
+  .rta-menu {
+    flex-direction: column;
+  }
+
+  .rta-menu > li + li {
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .rta-menu .sub-menu {
+    position: static;
+    box-shadow: none;
+    border: none;
+    padding-left: 1.2em;
+    background: rgba(0, 0, 0, 0.15);
+  }
+
+  .rta-menu .menu-item-has-children:hover > .sub-menu,
+  .rta-menu .menu-item-has-children.rta-menu-open > .sub-menu {
+    display: block !important;
+  }
+
+  .rta-menu .menu-item-has-children > a::after {
+    content: " ▸";
+  }
 }
 
 .rta-main {

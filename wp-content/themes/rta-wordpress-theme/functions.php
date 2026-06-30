@@ -153,9 +153,17 @@ function rta_enqueue_assets() {
 
 	wp_enqueue_style(
 		'rta-style',
-		get_stylesheet_uri(),
+		add_query_arg( 't', time(), get_stylesheet_uri() ),
 		array( 'rta-fonts' ),
-		wp_get_theme()->get( 'Version' )
+		null
+	);
+
+	wp_enqueue_script(
+		'rta-nav',
+		get_template_directory_uri() . '/js/navigation.js',
+		array(),
+		wp_get_theme()->get( 'Version' ),
+		true
 	);
 }
 add_action( 'wp_enqueue_scripts', 'rta_enqueue_assets' );
@@ -257,52 +265,217 @@ function rta_pattern_categories() {
 			'description' => __( 'Padrões de chamada para ação.', 'rta' ),
 		)
 	);
+
+	register_block_pattern_category(
+		'rta_cidades',
+		array(
+			'label'       => __( 'Cidades RTA', 'rta' ),
+			'description' => __( 'Padrões de páginas de cidades individuais.', 'rta' ),
+		)
+	);
 }
 add_action( 'init', 'rta_pattern_categories' );
 
 /**
- * Fallback menu matching the original site structure.
+ * Register custom block patterns from the /patterns directory.
  */
-function rta_default_menu() {
-	$items = array(
-		array( 'label' => 'Início', 'url' => home_url( '/' ) ),
-		array( 'label' => 'Sobre nós', 'url' => home_url( '/sobre-nos/' ) ),
-		array( 'label' => 'Fale Conosco', 'url' => home_url( '/fale-conosco/' ) ),
-		array( 'label' => 'Últimas Notícias', 'url' => home_url( '/ultimas-noticias/' ) ),
-		array( 'label' => 'Hoteis Fazenda', 'url' => home_url( '/hoteis-fazenda/' ) ),
-		array( 'label' => 'Amazônia +', 'url' => home_url( '/amazonia/' ) ),
-		array( 'label' => 'Bahia - Costa Do Descobrimento +', 'url' => home_url( '/bahia-costa-do-descobrimento/' ) ),
-		array( 'label' => 'Cachoeira Paulista', 'url' => home_url( '/cachoeira-paulista/' ) ),
-		array( 'label' => 'Campos do Jordão', 'url' => home_url( '/campos-do-jordao/' ) ),
-		array( 'label' => 'Circuito das Águas +', 'url' => home_url( '/circuito-das-aguas/' ) ),
-		array( 'label' => 'Circuito Histórico +', 'url' => home_url( '/circuito-historico/' ) ),
-		array( 'label' => 'Circuito Religioso +', 'url' => home_url( '/circuito-religioso/' ) ),
-		array( 'label' => 'Circuito Serras de Ibitipoca +', 'url' => home_url( '/circuito-serras-de-ibitipoca/' ) ),
-		array( 'label' => 'Costa Verde +', 'url' => home_url( '/costa-verde/' ) ),
-		array( 'label' => 'Fernando de Noronha', 'url' => home_url( '/fernando-de-noronha/' ) ),
-		array( 'label' => 'Mantiqueira +', 'url' => home_url( '/mantiqueira/' ) ),
-		array( 'label' => 'Penedo - Pq Itatiaia', 'url' => home_url( '/penedo-pq-itatiaia/' ) ),
-		array( 'label' => 'Petrópolis', 'url' => home_url( '/petropolis/' ) ),
-		array( 'label' => 'Pq Nac. Itatiaia +', 'url' => home_url( '/pq-nac-itatiaia/' ) ),
-		array( 'label' => 'Visconde de Mauá', 'url' => home_url( '/visconde-de-maua/' ) ),
-		array( 'label' => 'Região dos Lagos +', 'url' => home_url( '/regiao-dos-lagos/' ) ),
-		array( 'label' => 'Sana / Macaé', 'url' => home_url( '/sana-macae/' ) ),
-		array( 'label' => 'São Lourenço', 'url' => home_url( '/sao-lourenco/' ) ),
-		array( 'label' => 'Vale do Café +', 'url' => home_url( '/vale-do-cafe/' ) ),
-	);
+function rta_register_patterns() {
+	$pattern_dir = get_template_directory() . '/patterns';
+	if ( ! is_dir( $pattern_dir ) ) {
+		return;
+	}
 
-	echo '<ul class="rta-menu">';
-	foreach ( $items as $item ) {
-		$current = is_front_page() && trailingslashit( $item['url'] ) === trailingslashit( home_url( '/' ) );
-		$class   = $current ? ' class="current-menu-item"' : '';
-		printf(
-			'<li%s><a href="%s">%s</a></li>',
-			$class,
-			esc_url( $item['url'] ),
-			esc_html( $item['label'] )
+	$files = glob( $pattern_dir . '/*.php' );
+	sort( $files );
+
+	foreach ( $files as $file ) {
+		$content = file_get_contents( $file );
+		if ( ! $content ) {
+			continue;
+		}
+
+		$headers = get_file_data(
+			$file,
+			array(
+				'title'       => 'Title',
+				'slug'        => 'Slug',
+				'description' => 'Description',
+				'categories'  => 'Categories',
+			)
+		);
+
+		if ( empty( $headers['title'] ) || empty( $headers['slug'] ) ) {
+			continue;
+		}
+
+		$categories = array_map( 'trim', explode( ',', $headers['categories'] ) );
+
+		register_block_pattern(
+			$headers['slug'],
+			array(
+				'title'       => $headers['title'],
+				'description' => $headers['description'],
+				'content'     => $content,
+				'categories'  => $categories,
+			)
 		);
 	}
-	echo '</ul>';
+}
+add_action( 'init', 'rta_register_patterns', 20 );
+
+/**
+ * Build a hierarchical menu tree from flat item definitions.
+ */
+function rta_menu_tree() {
+	$tree = array(
+		array(
+			'label' => 'Amazônia',
+			'url'   => home_url( '/amazonia/' ),
+			'children' => array(
+				array( 'label' => 'Manaus (AM)', 'url' => home_url( '/manaus/' ) ),
+				array( 'label' => 'Santarém (PA)', 'url' => home_url( '/santarem/' ) ),
+				array( 'label' => 'Presidente Figueiredo (AM)', 'url' => home_url( '/presidente-figueiredo/' ) ),
+			),
+		),
+		array(
+			'label' => 'Bahia - Costa do Descobrimento',
+			'url'   => home_url( '/bahia-costa-do-descobrimento/' ),
+			'children' => array(
+				array( 'label' => 'Porto Seguro (BA)', 'url' => home_url( '/porto-seguro/' ) ),
+				array( 'label' => 'Trancoso (BA)', 'url' => home_url( '/trancoso/' ) ),
+				array( 'label' => 'Arraial d\'Ajuda (BA)', 'url' => home_url( '/arraial-dajuda/' ) ),
+			),
+		),
+		array(
+			'label' => 'Circuito das Águas',
+			'url'   => home_url( '/circuito-das-aguas/' ),
+			'children' => array(
+				array( 'label' => 'São Lourenço (MG)', 'url' => home_url( '/sao-lourenco/' ) ),
+				array( 'label' => 'Caxambu (MG)', 'url' => home_url( '/caxambu/' ) ),
+				array( 'label' => 'Cambuquira (MG)', 'url' => home_url( '/cambuquira/' ) ),
+			),
+		),
+		array(
+			'label' => 'Circuito Histórico',
+			'url'   => home_url( '/circuito-historico/' ),
+			'children' => array(
+				array( 'label' => 'Aiuruoca (MG)', 'url' => home_url( '/aiuruoca/' ) ),
+				array( 'label' => 'Baependi (MG)', 'url' => home_url( '/baependi/' ) ),
+				array( 'label' => 'Itamonte (MG)', 'url' => home_url( '/itamonte/' ) ),
+			),
+		),
+		array(
+			'label' => 'Circuito Religioso',
+			'url'   => home_url( '/circuito-religioso/' ),
+			'children' => array(
+				array( 'label' => 'Aparecida (SP)', 'url' => home_url( '/aparecida/' ) ),
+				array( 'label' => 'Santana do Lourenço (MG)', 'url' => home_url( '/santana-do-lourenco/' ) ),
+				array( 'label' => 'Brasópolis (MG)', 'url' => home_url( '/brasopolis/' ) ),
+			),
+		),
+		array(
+			'label' => 'Circuito Serras de Ibitipoca',
+			'url'   => home_url( '/circuito-serras-de-ibitipoca/' ),
+			'children' => array(
+				array( 'label' => 'Lima Duarte (MG)', 'url' => home_url( '/lima-duarte/' ) ),
+				array( 'label' => 'Santa Rita de Ibitipoca (MG)', 'url' => home_url( '/santa-rita-de-ibitipoca/' ) ),
+			),
+		),
+		array(
+			'label' => 'Costa Verde',
+			'url'   => home_url( '/costa-verde/' ),
+			'children' => array(
+				array( 'label' => 'Paraty (RJ)', 'url' => home_url( '/paraty/' ) ),
+				array( 'label' => 'Angra dos Reis (RJ)', 'url' => home_url( '/angra-dos-reis/' ) ),
+			),
+		),
+		array(
+			'label' => 'Mantiqueira',
+			'url'   => home_url( '/mantiqueira/' ),
+			'children' => array(
+				array( 'label' => 'Delfim Moreira (MG)', 'url' => home_url( '/delfim-moreira/' ) ),
+				array( 'label' => 'Marmelópolis (MG)', 'url' => home_url( '/marmelopolis/' ) ),
+				array( 'label' => 'Passa Quatro (MG)', 'url' => home_url( '/passa-quatro/' ) ),
+			),
+		),
+		array(
+			'label' => 'Parque Nacional de Itatiaia',
+			'url'   => home_url( '/pq-nac-itatiaia/' ),
+			'children' => array(
+				array( 'label' => 'Parte Baixa (RJ)', 'url' => home_url( '/parte-baixa/' ) ),
+				array( 'label' => 'Parte Alta (MG)', 'url' => home_url( '/parte-alta/' ) ),
+			),
+		),
+		array(
+			'label' => 'Região dos Lagos',
+			'url'   => home_url( '/regiao-dos-lagos/' ),
+			'children' => array(
+				array( 'label' => 'Arraial do Cabo (RJ)', 'url' => home_url( '/arraial-do-cabo/' ) ),
+				array( 'label' => 'Búzios (RJ)', 'url' => home_url( '/buzios/' ) ),
+				array( 'label' => 'Cabo Frio (RJ)', 'url' => home_url( '/cabo-frio/' ) ),
+			),
+		),
+		array(
+			'label' => 'Vale do Café',
+			'url'   => home_url( '/vale-do-cafe/' ),
+			'children' => array(
+				array( 'label' => 'Vassouras (RJ)', 'url' => home_url( '/vassouras/' ) ),
+				array( 'label' => 'Valença (RJ)', 'url' => home_url( '/valenca/' ) ),
+				array( 'label' => 'Conservatória (RJ)', 'url' => home_url( '/conservatoria/' ) ),
+			),
+		),
+	);
+
+	return $tree;
+}
+
+/**
+ * Render the fallback menu tree recursively.
+ */
+function rta_render_menu_tree( $items, $parent_current = false ) {
+	$output = '<ul class="rta-menu">';
+
+	foreach ( $items as $item ) {
+		$has_children = ! empty( $item['children'] );
+		$is_current   = $parent_current || ( is_page() && trailingslashit( get_permalink() ) === trailingslashit( $item['url'] ) );
+		$classes      = array();
+
+		if ( $is_current ) {
+			$classes[] = 'current-menu-item';
+		}
+		if ( $has_children ) {
+			$classes[] = 'menu-item-has-children';
+		}
+
+		$class_attr = $classes ? ' class="' . esc_attr( implode( ' ', $classes ) ) . '"' : '';
+
+		$output .= '<li' . $class_attr . '>';
+		$output .= '<a href="' . esc_url( $item['url'] ) . '">' . esc_html( $item['label'] ) . '</a>';
+
+		if ( $has_children ) {
+			$output .= '<ul class="sub-menu">';
+			foreach ( $item['children'] as $child ) {
+				$child_current = is_page() && trailingslashit( get_permalink() ) === trailingslashit( $child['url'] );
+				$child_class   = $child_current ? ' class="current-menu-item"' : '';
+				$output .= '<li' . $child_class . '>';
+				$output .= '<a href="' . esc_url( $child['url'] ) . '">' . esc_html( $child['label'] ) . '</a>';
+				$output .= '</li>';
+			}
+			$output .= '</ul>';
+		}
+
+		$output .= '</li>';
+	}
+
+	$output .= '</ul>';
+	return $output;
+}
+
+/**
+ * Fallback menu matching the original site structure with dropdown support.
+ */
+function rta_default_menu() {
+	echo rta_render_menu_tree( rta_menu_tree() );
 }
 
 /**
