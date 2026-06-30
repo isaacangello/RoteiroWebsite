@@ -137,7 +137,7 @@ set ftp:ssl-protect-data true
 set ftp:ssl-allow true
 set ssl:verify-certificate no
 
-mirror -R --delete --verbose \
+mirror -R --delete \
   "$WORDPRESS_DIR" \
   "$TARGET"
 EOF

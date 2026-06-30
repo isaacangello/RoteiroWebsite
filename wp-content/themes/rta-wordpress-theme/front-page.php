@@ -9,24 +9,7 @@ get_header();
 ?>
 
 <section class="rta-home-grid">
-	<aside class="rta-sidebar-left" aria-label="<?php esc_attr_e( 'Apoio', 'rta' ); ?>">
-		<p class="rta-sidebar-left__label"><?php esc_html_e( 'apoio', 'rta' ); ?></p>
-
-		<?php if ( is_active_sidebar( 'sidebar-left' ) ) : ?>
-			<?php dynamic_sidebar( 'sidebar-left' ); ?>
-		<?php else : ?>
-			<div class="rta-partner">
-				<p class="rta-partner__name rta-partner__name--aafbb">aafbb</p>
-				<p class="rta-partner__desc"><?php esc_html_e( 'Associação dos Antigos Funcionários do Banco do Brasil', 'rta' ); ?></p>
-			</div>
-
-			<div class="rta-partner">
-				<div class="rta-partner__logo-box" aria-hidden="true"><span>👥</span></div>
-				<p class="rta-partner__name">APOSCEG</p>
-				<p class="rta-partner__desc"><?php esc_html_e( 'Associação dos Funcionários Aposentados da Companhia Estadual de Gás do RJ', 'rta' ); ?></p>
-			</div>
-		<?php endif; ?>
-	</aside>
+	<?php get_template_part( 'template-parts/sidebar-left' ); ?>
 
 	<div class="rta-center">
 		<?php echo rta_get_visitor_counter_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -36,38 +19,13 @@ get_header();
 		</p>
 
 		<div class="rta-hero-logo">
-			<?php if ( has_custom_logo() ) : ?>
-				<?php the_custom_logo(); ?>
-			<?php else : ?>
-				<div class="rta-hero-logo__fallback" aria-hidden="true"><span>RTA</span></div>
-			<?php endif; ?>
+			<img src="<?php echo esc_url( get_template_directory_uri() . '/logo.png' ); ?>"
+				alt="<?php bloginfo( 'name' ); ?>"
+				class="rta-screenshot">
 		</div>
 	</div>
 
-	<aside class="rta-sidebar-right" aria-label="<?php esc_attr_e( 'Widgets', 'rta' ); ?>">
-		<?php if ( is_active_sidebar( 'sidebar-right' ) ) : ?>
-			<?php dynamic_sidebar( 'sidebar-right' ); ?>
-		<?php else : ?>
-			<div class="rta-widget">
-				<div class="rta-widget__header"><?php esc_html_e( 'Relógio', 'rta' ); ?></div>
-				<div class="rta-widget__body">
-					<div class="rta-clock" id="rta-clock">--:--</div>
-				</div>
-			</div>
-
-			<div class="rta-widget">
-				<div class="rta-widget__header">CLIMATEMPO</div>
-				<div class="rta-widget__body">
-					<p class="rta-weather__city">SP - São Paulo</p>
-					<p class="rta-weather__date">17/08 Sex</p>
-					<p class="rta-weather__temp">13° / 18°</p>
-					<p class="rta-weather__desc">0%, 2mm</p>
-					<p class="rta-weather__desc"><?php esc_html_e( 'Céu nublado com possibilidade de garoa de dia e à noite.', 'rta' ); ?></p>
-					<span class="rta-weather__video"><?php esc_html_e( 'VER VÍDEO', 'rta' ); ?></span>
-				</div>
-			</div>
-		<?php endif; ?>
-	</aside>
+	<?php get_template_part( 'template-parts/sidebar-right' ); ?>
 </section>
 
 <?php if ( have_posts() ) : ?>

@@ -1,0 +1,19 @@
+# Proteção do diretório roteiro-backup
+# backup.php e download.php têm autenticação própria via chave secreta
+
+<Files "backup.php">
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+<Files "download.php">
+    Order Allow,Deny
+    Allow from all
+</Files>
+
+<FilesMatch "\.(zip|sql|gz)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+Options -Indexes

@@ -1,0 +1,77 @@
+{
+	"version": 2,
+	"settings": {
+		"color": {
+			"palette": [
+				{
+					"name": "Vermelho RTA",
+					"slug": "rta-red",
+					"color": "#c40000"
+				},
+				{
+					"name": "Vermelho Escuro",
+					"slug": "rta-red-dark",
+					"color": "#7a0000"
+				},
+				{
+					"name": "Laranja",
+					"slug": "rta-orange",
+					"color": "#ff6600"
+				},
+				{
+					"name": "Branco",
+					"slug": "rta-white",
+					"color": "#ffffff"
+				},
+				{
+					"name": "Texto",
+					"slug": "rta-text",
+					"color": "#333333"
+				},
+				{
+					"name": "Borda",
+					"slug": "rta-border",
+					"color": "#d9d9d9"
+				}
+			]
+		},
+		"typography": {
+			"fontSizes": [
+				{
+					"name": "Pequeno",
+					"shortName": "P",
+					"size": "12px",
+					"slug": "small"
+				},
+				{
+					"name": "Normal",
+					"shortName": "N",
+					"size": "14px",
+					"slug": "normal"
+				},
+				{
+					"name": "Médio",
+					"shortName": "M",
+					"size": "18px",
+					"slug": "medium"
+				},
+				{
+					"name": "Grande",
+					"shortName": "G",
+					"size": "24px",
+					"slug": "large"
+				},
+				{
+					"name": "Muito Grande",
+					"shortName": "XG",
+					"size": "32px",
+					"slug": "x-large"
+				}
+			]
+		},
+		"layout": {
+			"contentSize": "980px",
+			"wideSize": "1200px"
+		}
+	}
+}

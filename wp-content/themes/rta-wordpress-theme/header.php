@@ -19,11 +19,11 @@
 <header class="rta-header" role="banner">
 	<div class="rta-header__inner">
 		<div class="rta-logo">
-			<?php if ( has_custom_logo() ) : ?>
-				<?php the_custom_logo(); ?>
-			<?php else : ?>
-				<div class="rta-logo__fallback" aria-hidden="true">RTA</div>
-			<?php endif; ?>
+			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
+				<img src="<?php echo esc_url( get_template_directory_uri() . '/logo.png' ); ?>"
+					alt="<?php bloginfo( 'name' ); ?>"
+					class="rta-logo__img">
+			</a>
 		</div>
 
 		<div class="rta-branding">
