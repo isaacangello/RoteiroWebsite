@@ -26,20 +26,27 @@ docker compose up -d
 | WordPress | http://localhost:8080 |
 | phpMyAdmin | http://localhost:8081 |
 
-### Banco remoto (produção)
+## Bancos de Dados
 
-MySQL remoto ativo em `148.72.177.185`:
+| Ambiente | Banco | Acesso |
+|----------|-------|--------|
+| Local (Docker) | `roteirot_wordpress` | `localhost:8080` |
+| Preview | `roteirot_dev` | cPanel / phpMyAdmin |
+| Produção | `roteirot_wordpress` | cPanel / phpMyAdmin |
 
-| Parâmetro | Valor |
-|---|---|
-| Host | `148.72.177.185` |
-| Database | `roteirot_wordpress` |
-| Usuário | `roteirot_user` |
-| Senha | `SUA_SENHA_AQUI` |
+> MySQL remoto (`148.72.177.185:3306`) bloqueado pelo firewall da Hostinger.
+> Para importar/exportar dados, use o phpMyAdmin do cPanel ou os scripts PHP no servidor.
 
-```bash
-mysql -h 148.72.177.185 -u roteirot_user -p roteirot_wordpress
-```
+### Setup inicial do dev-preview (uma vez)
+
+1. Crie o banco `roteirot_dev` no cPanel (já feito)
+2. Exporte o banco de producao via `backup.php` ou phpMyAdmin
+3. Importe o SQL para `roteirot_dev` via phpMyAdmin
+4. Envie o `wp-config.php` manualmente via FTP para `public_html/dev-preview/wp-config.php`
+   (use o comando `./scripts/deploy.sh preview` que gera o wp-config automaticamente,
+    ou crie manualmente com WP_HOME = https://preview.roteiroturisticodosaposentados.com)
+
+### Dados do banco (local)
 
 ### Parar ambiente
 

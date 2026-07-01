@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: 📂 Deploy to FTP
+      - name: Deploy wp-content to FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_HOST }}
@@ -18,6 +18,5 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: ${{ github.ref_name == 'main' && 'public_html/wp-content/' || 'public_html/dev-preview/wp-content/' }}
           protocol: ftps
-#          security: strict
           port: 21
           local-dir: ./wp-content/

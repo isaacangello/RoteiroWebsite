@@ -19,13 +19,19 @@ Roteiro Turístico dos Aposentados — Site WordPress de turismo.
 - Plugins bind mount: `./wp-content/plugins` → `/var/www/html/wp-content/plugins`
 - Container: `roteiro-wordpress`, `roteiro-db`, `roteiro-phpmyadmin`
 
+### Preview (Dev)
+- URL: https://preview.roteiroturisticodosaposentados.com
+- Servidor: Apache, PHP 8.3 (ea-php83 via LSAPI), cPanel, **LiteSpeed cache**
+- DB: `roteirot_dev`@localhost, user `roteirot_user`, prefixo `rw_`
+- Raiz web: `/home/roteirot/public_html/dev-preview/`
+- wp-config.php: próprio, com DB_NAME=roteirot_dev e WP_HOME/WP_SITEURL = preview.*
+
 ### Produção
 - URL: https://roteiroturisticodosaposentados.com
 - Servidor: nginx, PHP 8.3, cPanel
 - DB: `roteirot_wordpress`@localhost, user `roteirot_user`, senha `SUA_SENHA_AQUI`, prefixo `rw_`
 - FTP: `ftp.roteiroturisticodosaposentados.com` / `seu-email@exemplo.com` / `SUA_SENHA_AQUI` (FTPS, TLS)
 - Raiz web: `/home/roteirot/public_html/`
-- Pasta dev-preview (para branch develop): `public_html/dev-preview/wp-content/`
 
 ### MySQL Remoto
 - Host: `148.72.177.185:3306` (porta **fechada** — firewall da hospedagem bloqueia)
@@ -86,3 +92,6 @@ lftp -c "open -u 'seu-email@exemplo.com','SUA_SENHA_AQUI' ftp.roteiroturisticodo
 - Featured images configuradas: Manaus, Fernando de Noronha, Campos do Jordão, Porto Seguro
 - `page.php` com `the_post_thumbnail()` no topo das páginas
 - Backup do banco: `database/roteiro_website_2026-07-01_03-28-41.sql.gz`
+- Servidor compartilhado usa MariaDB 10.11 (não MySQL 8) com charset padrão **latin1 (cp1252)**
+- LiteSpeed cache no dev-preview — adicionar `?nocache=N` para bypass manual
+- Dev-preview funcionando com acentos corretos, wp-config.php aponta para `roteirot_dev`

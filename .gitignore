@@ -16,3 +16,4 @@ database/*
 # Backups do servidor
 wp-content/roteiro-backup/backups/
 database/server-backups/
+scripts/
