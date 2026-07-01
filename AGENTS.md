@@ -74,9 +74,15 @@ lftp -c "open -u 'seu-email@exemplo.com','SUA_SENHA_AQUI' ftp.roteiroturisticodo
 - `wp-config.php` local NÃO existe (gerado pelo Docker). Produção tem `wp-config.php` próprio.
 - MySQL remoto (148.72.177.185:3306) bloqueado pelo firewall da hospedagem.
 - Ao publicar no `dev-preview`, não esquecer de criar a pasta no servidor e os secrets do GitHub Actions.
+- **WP-CLI `--post_content=@file` não funciona**: flag tratada como string literal. Usar MySQL direto para operações em lote.
 
-## Estado Atual (30/06/2026)
+## Estado Atual (01/07/2026)
 - Site funcionando em produção
 - Página "Em Construção" ativa (plugin `rta-maintenance`)
-- Menu hierárquico com 11 regiões + cidas implementado
+- Menu hierárquico com 11 regiões + cidades implementado
 - 52 block patterns criados
+- Cover block vermelho removido de todas as 52 páginas
+- Google Maps preview (iframe embed) adicionado em 41 páginas de cidades
+- Featured images configuradas: Manaus, Fernando de Noronha, Campos do Jordão, Porto Seguro
+- `page.php` com `the_post_thumbnail()` no topo das páginas
+- Backup do banco: `database/roteiro_website_2026-07-01_03-28-41.sql.gz`

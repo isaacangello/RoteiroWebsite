@@ -50,6 +50,31 @@ git push -u origin develop
 
 ---
 
+## Sessão: 01/07/2026 — Google Maps Preview, Featured Images, Recuperação de Conteúdo
+
+### Decisões Tomadas
+
+1. **Google Maps embed sem API key**: usa `https://www.google.com/maps?q=QUERY&output=embed` em iframe HTML block
+2. **MySQL direto para operações em lote**: `wp post update --post_content=@file` não funciona (trata como string literal). Usar mysqli + prepared statements
+3. **Featured images via Pixabay e Wikimedia Commons**: sem necessidade de API key
+4. **page.php**: `the_post_thumbnail()` no topo das páginas de destino
+
+### Mudanças Realizadas
+
+| Mudança | Detalhes |
+|---|---|
+| Cover block removido | 52 páginas tiveram bloco `rta-red-dark` removido |
+| Conteúdo restaurado | 52 páginas recuperadas do backup via JOIN UPDATE |
+| Google Maps embed | 41 páginas de cidades com iframe do mapa |
+| Featured images | 4 imagens configuradas (Manaus, Noronha, Campos, Porto Seguro) |
+
+### Lições Aprendidas
+
+- `wp post update --post_content=@caminho/arquivo` NÃO lê conteúdo de arquivo — interpreta como literal
+- Para conteúdo grande com caracteres especiais, operar diretamente no MySQL (mysqli) com prepared statements é mais confiável
+
+---
+
 ## Sessão: 30/06/2026 — Customizações do Tema RTA
 
 ### Decisões Tomadas
@@ -91,26 +116,3 @@ O diretório do tema é propriedade do usuário `http:http` (Docker). Operaçõe
 6. **Template parts**: sidebars extraídas para `template-parts/sidebar-left.php` e `sidebar-right.php`
 7. **`theme.json`**: centralizada configuração de cores, fontes e layout
 8. **Novos templates**: `404.php`, `archive.php`, `search.php` com CSS dedicado
-
-### Features Adicionadas
-
-| Recurso | Descrição |
-|---|---|
-| `post-formats` | aside, gallery, image, link, quote, video |
-| `theme.json` | Paleta, font sizes, layout (contentSize 980px) |
-| Block styles | `rta-checkmark-list`, `rta-button-outline` |
-| Pattern categories | `rta_destinos`, `rta_cta` |
-| Acessibilidade | Focus-visible, text-wrap pretty, smooth scroll |
-| Tipografia fluida | `clamp()` em todos os tamanhos |
-
-### Novos Arquivos
-
-| Arquivo | Descrição |
-|---|---|
-| `404.php` | Página 404 personalizada com busca |
-| `archive.php` | Arquivos com título, descrição, data/categoria |
-| `search.php` | Resultados de busca com formulário |
-| `template-parts/sidebar-left.php` | Sidebar esquerda extraída |
-| `template-parts/sidebar-right.php` | Sidebar direita extraída (relógio/clima) |
-| `theme.json` | Configuração centralizada do design |
-| `logo.png` | Logo do tema (847x1000)

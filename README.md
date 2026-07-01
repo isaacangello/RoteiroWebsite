@@ -150,6 +150,15 @@ roteirowebsite/
 └── .github/workflows/   ← GitHub Actions
 ```
 
+## Funcionalidades Implementadas
+
+- **Menu dropdown hierárquico**: 11 regiões com cidades como subitens, hover com 150ms de delay, suporte mobile
+- **52 block patterns**: 41 padrões de cidade + 11 de região, registrados via `rta_register_patterns()`
+- **Google Maps preview**: iframe embed do mapa após o botão "Abrir no Google Maps" em 41 páginas de cidades
+- **Featured images**: imagens destacadas no topo das páginas via `the_post_thumbnail()` em `page.php`
+- **Tipografia fluida**: `clamp()` para responsividade, Google Fonts enfileiradas via WordPress
+- **Tema clássico PHP**: customizações via `add_theme_support()` + `theme.json`
+
 ## Ambiente Local vs Produção
 
 | Item | Local (Docker) | Produção (Hospedagem) |
