@@ -607,3 +607,12 @@ img {
 .rta-content-area article h2 a:hover {
   color: var(--rta-orange);
 }
+
+.rta-featured-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    object-fit: cover;
+    max-height: 500px;
+}

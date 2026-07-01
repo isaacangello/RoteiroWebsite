@@ -13,6 +13,7 @@ get_header();
 		<?php the_post(); ?>
 		<article <?php post_class(); ?>>
 			<h1><?php the_title(); ?></h1>
+			<?php the_post_thumbnail( "full", [ "class" => "rta-featured-image" ] ); ?>
 			<?php the_content(); ?>
 		</article>
 	<?php endwhile; ?>
