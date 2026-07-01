@@ -50,6 +50,36 @@ git push -u origin develop
 
 ---
 
+## Sessão: 01/07/2026 (Parte 2) — Featured Images Completas (52/52)
+
+### Decisões Tomadas
+
+1. **Workflow local primeiro**: imagens foram baixadas do servidor dev-preview para o ambiente Docker local
+2. **Unsplash API + Wikimedia Commons**: Unsplash tem rate limit de 50 req/h; Wikimedia Commons como fallback
+3. **Import via PHP no container**: `wp media import --post_id` não funciona em lote. Usar `media_handle_sideload()` + `set_post_thumbnail()` via `wp eval`
+4. **Correção de duplicatas**: imagens do servidor continham duplicatas — substituídas por imagens únicas do Wikimedia
+
+### Mudanças Realizadas
+
+| Mudança | Detalhes |
+|---|---|
+| Imagens baixadas do servidor | 32 imagens de cidades do dev-preview para local |
+| Imagens novas (Unsplash) | Brasópolis, Maringá, São Lourenço, Amazônia, Bahia Costa, Circuito Histórico, Circuito Ibitipoca, Costa Verde, Mantiqueira (9) |
+| Imagens novas (Wikimedia) | Valença, Fumaça, Circuito Águas, Circuito Religioso, Itatiaia, Região Lagos, Vale Café, + 18 correções de duplicatas |
+| Featured images configuradas | 51 páginas de destino (36 cidades + 11 regiões + 4 originais) |
+| Favicon | Adicionado no header.php (favicon.ico + favicon-512.png) |
+| header.php corrigido | Linha `rootpw` removida |
+
+### Lições Aprendidas
+
+- **Unsplash rate limit**: 50 req/h. Monitorar `x-ratelimit-remaining` no header da resposta
+- **wp media import --post_id em lote**: não funciona — o `--post_id=` é global, não por arquivo
+- **`media_handle_sideload()`**: melhor abordagem para importar múltiplas imagens via PHP com `wp eval`
+- **Imagens do servidor**: continham duplicatas (mesmo arquivo para várias cidades) — sempre verificar integridade
+- **Wikimedia Commons API**: requer User-Agent personalizado (sem ele retorna 403)
+
+---
+
 ## Sessão: 01/07/2026 — Google Maps Preview, Featured Images, Recuperação de Conteúdo
 
 ### Decisões Tomadas

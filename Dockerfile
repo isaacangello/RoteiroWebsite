@@ -1,4 +1,4 @@
-FROM wordpress:7.0.0-php8.3-apache
+FROM wordpress:7.0.0-php8.3-fpm
 
 RUN set -eux; \
     apt-get update; \

@@ -15,7 +15,6 @@ get_header();
 		<?php echo rta_get_visitor_counter_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		<p class="rta-counter__caption">
 			<?php esc_html_e( 'pessoas já passaram por aqui!', 'rta' ); ?>
-			<span class="rta-counter__credit">AnalogMix.com</span>
 		</p>
 
 		<div class="rta-hero-logo">

@@ -1,5 +1,41 @@
 # Changelog
 
+## 01/07/2026 (Sessão 3) — Docker nginx + MariaDB 10.11 latin1 + Homepage real
+
+### Alterado
+- **Docker**: Apache → nginx (`wordpress:...-fpm` + `nginx:alpine`)
+- **MariaDB**: `mariadb:11` → `mariadb:10.11` com charset **latin1** (cp1252) — igual produção
+- **Homepage**: Lorem Ipsum substituído por conteúdo real sobre o projeto
+- **Contador**: crédito "AnalogMix.com" removido
+
+### Fix
+- **dev-preview .htaccess**: regras de rewrite do WordPress estavam vazias — corrigido
+- **Páginas de destino**: URLs hierárquicas e planas funcionando (301 → 200)
+
+## 01/07/2026 (Sessão 2) — Featured Images Completas (52/52 páginas)
+
+### Adicionado
+- **32 imagens de cidades** baixadas do servidor dev-preview e importadas localmente
+- **5 imagens de cidades faltantes** via Unsplash + Wikimedia Commons (Brasópolis, Fumaça, Maringá, São Lourenço, Valença)
+- **11 imagens de regiões** via Unsplash + Wikimedia Commons (Amazônia até Vale do Café)
+- **Favicon** no `header.php` (favicon.ico + favicon-512.png)
+
+### Corrigido
+- **18 imagens duplicadas** identificadas e substituídas por imagens únicas:
+  - Vassouras/Parte Baixa, Fumaça/Itatiaia, Aparecida/Conservatória/Macaé/Marmelópolis/Penedo/Sana,
+    Arraial do Cabo/Cabo Frio/Visconde de Mauá, Circuito Águas/Religioso,
+    Parte Alta/Passa Quatro, Itaipava/Petrópolis
+- **header.php**: linha `rootpw` removida (estava corrompendo o DOCTYPE)
+- Permissão dos favicons ajustada para `http:http`
+- Arquivo `header.php.bak` removido
+
+### Lições Aprendidas
+- **Unsplash API**: rate limit de 50 req/h. Fallback necessário: Wikimedia Commons
+- **wp media import --post_id**: não funciona em lote — `--post_id=` é aplicado globalmente ao último valor.
+  Usar `media_handle_sideload()` + `set_post_thumbnail()` individualmente via `wp eval`
+- **Imagens do servidor (dev-preview)**: continham duplicatas — mesma imagem para várias cidades diferentes
+- **Permissão Docker**: bind mount do tema e uploads é `http:http`, necessário `sudo` para alterar arquivos
+
 ## 01/07/2026 — Google Maps Preview, Featured Images, Cover Block Removal
 
 ### Adicionado

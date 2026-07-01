@@ -20,10 +20,10 @@
   - [ ] `FTP_PASSWORD`
 - [ ] Verificar se Actions está habilitado no repositório
 
-## Hospedagem
+## Hospedagem / Deploy
 
-- [ ] Criar pasta `public_html/dev-preview/` no FTP
-- [ ] Verificar suporte a FTPS explícito na hospedagem
+- [x] Pasta `public_html/dev-preview/` criada no FTP
+- [x] Suporte a FTPS explícito na hospedagem
 - [ ] Enviar `wp-content/roteiro-backup/` para o servidor via FTP
 - [ ] Testar backup manual: `https://site.com/wp-content/roteiro-backup/backup.php?key=SEGREDO`
 - [ ] Configurar cron no cPanel para backup diário (03:00)
@@ -36,23 +36,71 @@
 
 ## Desenvolvimento — Tema
 
-- [x] Adicionar screenshot do tema (`screenshot.png`)
-- [x] Adicionar theme supports: custom-logo, custom-header, custom-background, align-wide, responsive-embeds, editor-styles
-- [x] Adicionar paleta de cores do editor (6 cores do tema)
-- [x] Adicionar font-sizes do editor (5 tamanhos)
-- [x] Criar `editor-style.css` para o editor Gutenberg
-- [x] Exibir screenshot no front-page.php (com fallback)
-- [x] Criar templates 404.php, archive.php, search.php
-- [x] Extrair sidebars para template-parts/ (reutilização)
-- [x] Adicionar theme.json com paleta, fontes e layout
-- [x] Adicionar block styles (checkmark list, button outline)
-- [x] Adicionar pattern categories (destinos, CTAs)
-- [x] Adicionar suporte a post formats
-- [x] Migrar Google Fonts de @import para enqueue PHP
-- [x] Tipografia fluida com clamp()
-- [x] Acessibilidade: focus-visible, text-wrap pretty
+- [x] Screenshot, theme supports, paleta, fontes, editor-style.css
+- [x] Templates (front-page, 404, archive, search), template-parts sidebars
+- [x] theme.json, block styles, pattern categories, post formats
+- [x] Google Fonts enqueue, tipografia fluida, acessibilidade
+- [x] page.php com `the_post_thumbnail()` no topo
+- [x] Favicon configurado no header.php
 - [ ] Criar/customizar plugins WordPress
-- [ ] Testar localmente com Docker
-- [ ] Fazer deploy via develop → preview
-- [ ] Homologar em dev-preview
-- [ ] Fazer merge para main → produção
+
+---
+
+## 🖼️ Featured Images — CONCLUÍDO ✅
+
+### Fase 1: Baixar imagens do servidor para local
+
+- [x] Baixar 32 imagens do servidor dev-preview para `wp-content/uploads/2026/07/` local
+- [x] Importar via WP-CLI e configurar featured images para 32 cidades
+
+### Fase 2: Buscar imagens faltantes
+
+**5 cidades sem imagem → resolvido:**
+- [x] Brasópolis (MG) — Unsplash
+- [x] Fumaça (Distrito de Itatiaia) — Wikimedia Commons
+- [x] Maringá (Distrito de Resende) — Unsplash
+- [x] São Lourenço (MG) — Unsplash
+- [x] Valença (RJ) — Wikimedia Commons
+
+**11 regiões sem imagem → resolvido:**
+- [x] Amazônia — Unsplash
+- [x] Bahia — Costa do Descobrimento — Unsplash
+- [x] Circuito das Águas — Wikimedia Commons
+- [x] Circuito Histórico — Unsplash
+- [x] Circuito Religioso — Wikimedia Commons
+- [x] Circuito Serras de Ibitipoca — Unsplash
+- [x] Costa Verde — Unsplash
+- [x] Mantiqueira — Unsplash
+- [x] Parque Nacional de Itatiaia — Wikimedia Commons
+- [x] Região dos Lagos — Wikimedia Commons
+- [x] Vale do Café — Wikimedia Commons
+
+### Fase 3: Corrigir duplicatas
+
+- [x] Identificar 18 imagens duplicadas (mesmo arquivo para múltiplas cidades)
+- [x] Substituir cada uma por imagem única via Wikimedia Commons
+- [x] Reimportar e reatribuir featured images
+
+### Fase 4: Resultado final
+
+- [x] **51 páginas de destino com featured image única**
+- [x] Verificar exibição em http://localhost:8080
+- [ ] Fazer backup do banco local (`database/`)
+
+### Fase 5: Deploy (futuro)
+
+- [ ] git add/commit das mudanças no `develop`
+- [ ] git push → GitHub Actions → dev-preview
+- [ ] Homologar em https://preview.roteiroturisticodosaposentados.com
+- [ ] Se aprovado, merge `develop` → `main` → produção
+- [ ] Homologar em https://roteiroturisticodosaposentados.com
+
+---
+
+## Observações
+
+- **Stack:** desenvolver local (Docker), testar, depois deploy
+- **Unsplash API:** taxa limite de 50 requisições/hora (modo gratuito). Fallback: Wikimedia Commons
+- **wp media import --post_id:** não funciona em lote (sempre associa ao último post_id). Usar PHP `media_handle_sideload()` + `set_post_thumbnail()` individualmente
+- **Imagens do servidor (32):** tinham duplicatas — mesma imagem para várias cidades. Corrigido com Wikimedia Commons
+- **TODO.md atualizado em:** 01/07/2026
