@@ -146,3 +146,48 @@ O diretório do tema é propriedade do usuário `http:http` (Docker). Operaçõe
 6. **Template parts**: sidebars extraídas para `template-parts/sidebar-left.php` e `sidebar-right.php`
 7. **`theme.json`**: centralizada configuração de cores, fontes e layout
 8. **Novos templates**: `404.php`, `archive.php`, `search.php` com CSS dedicado
+
+---
+
+## Resumo Executivo — 01/07/2026
+
+### 5 Marcos Mais Importantes
+
+1. **Featured images em 52/52 páginas de destino** — cada cidade (41) e região (11) com imagem única e representativa, sem duplicatas. Workflow: servidor → Unsplash → Wikimedia Commons → WP-CLI.
+
+2. **Menu hierárquico funcional com 11 regiões + 41 cidades** — dropdown com hover (150ms delay), mobile toggle, bridge ::before para evitar fechamento acidental.
+
+3. **52 block patterns customizados** — blocos reutilizáveis de conteúdo registrados no tema, cobrindo todas as cidades e regiões.
+
+4. **Docker alinhado com produção** — migrado de Apache para nginx + PHP-FPM, MariaDB 10.11 com charset latin1 (cp1252), idêntico ao servidor.
+
+5. **Conteúdo real em todas as páginas** — Lorem Ipsum eliminado da homepage e páginas de destino. Google Maps embed em 41 cidades. Páginas Fale Conosco, Sobre Nós e Últimas Notícias criadas.
+
+### Relatório Numérico do Projeto
+
+| Indicador | Valor |
+|---|---|
+| **Páginas publicadas** | 57 |
+| Cidades | 41 |
+| Regiões | 11 |
+| Utilitárias (Início, Sobre, Fale, Notícias, Sample) | 5 |
+| **Posts publicados** | 4 |
+| Notícias | 3 |
+| Uncategorized | 1 (Hello World) |
+| **Páginas com featured image** | 52/57 (100% destinos) |
+| **Itens no menu principal** | 65 |
+| **Block patterns** | 52 |
+| **Plugins ativos** | 0 (Akismet e Hello Dolly inativos) |
+| **Arquivos do tema** | CSS: 2, PHP: 9, JS: 1 |
+| **Cidades órfãs (sem região pai)** | 11 |
+| **Commits no repositório** | 28 |
+| **Branches** | develop (21 commits), main (7 commits) |
+| **Contribuidores** | 1 (isaacangello) |
+| **Contêineres Docker** | nginx, wordpress (FPM), MariaDB 10.11, phpMyAdmin |
+| **Portas** | 8080 (site), 8081 (phpMyAdmin), 3307 (DB) |
+
+### Pendências
+
+- Cidades órfãs (11) sem parentesco com região — menu pode quebrar em produção
+- Deploy para dev-preview pendente (push develop → GitHub Actions)
+- Adicionar Sobre Nós, Fale Conosco e Últimas Notícias ao menu principal

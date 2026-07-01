@@ -518,3 +518,26 @@ function rta_track_visitor() {
 	);
 }
 add_action( 'template_redirect', 'rta_track_visitor' );
+
+/**
+ * Redirect alternate slugs to their canonical page URLs.
+ */
+function rta_redirect_alternate_slugs() {
+	if ( is_404() ) {
+		global $wp;
+		$path = trim( $wp->request, '/' );
+
+		$aliases = array(
+			'penedo-pq-itatiaia' => 'penedo',
+		);
+
+		if ( isset( $aliases[ $path ] ) ) {
+			$page = get_page_by_path( $aliases[ $path ], OBJECT, 'page' );
+			if ( $page ) {
+				wp_safe_redirect( get_permalink( $page->ID ), 301 );
+				exit;
+			}
+		}
+	}
+}
+add_action( 'template_redirect', 'rta_redirect_alternate_slugs' );

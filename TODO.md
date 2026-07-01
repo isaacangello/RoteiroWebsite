@@ -87,15 +87,34 @@
 - [x] Verificar exibição em http://localhost:8080
 - [ ] Fazer backup do banco local (`database/`)
 
-### Fase 5: Deploy (futuro)
+### Fase 5: Conteúdo e Infraestrutura
 
-- [ ] git add/commit das mudanças no `develop`
+- [x] Substituir Lorem Ipsum da homepage por conteúdo real
+- [x] Remover crédito "AnalogMix.com" do contador de visitantes
+- [x] Docker: Apache → nginx + PHP-FPM
+- [x] Docker: MariaDB 11 → 10.11 com charset latin1 (cp1252)
+- [x] Criar página Fale Conosco
+- [x] Criar página Sobre Nós
+- [x] Criar página Últimas Notícias
+- [x] Criar 3 posts de notícias (Melhor época, Acessibilidade, Roteiro Costa Verde)
+- [x] Adicionar redirect de /penedo-pq-itatiaia/ → /penedo/
+- [x] Corrigir .htaccess do dev-preview (rewrite rules do WordPress vazias)
+
+### Fase 6: Deploy
+
+- [x] git commit (develop)
 - [ ] git push → GitHub Actions → dev-preview
 - [ ] Homologar em https://preview.roteiroturisticodosaposentados.com
 - [ ] Se aprovado, merge `develop` → `main` → produção
 - [ ] Homologar em https://roteiroturisticodosaposentados.com
 
 ---
+
+## Pendências
+
+- **Cidades órfãs:** 11 cidades sem região pai (post_parent = 0) — podem quebrar URLs hierárquicas
+- **Menu:** Adicionar Sobre Nós, Fale Conosco e Últimas Notícias ao menu principal
+- **Backup do banco:** pendente (comando: `docker exec -i roteiro-db mysqldump -uroot -pPowerRoot26:) roteirot_wordpress | gzip > database/dump.sql.gz`)
 
 ## Observações
 
