@@ -122,7 +122,6 @@ img {
 
 .rta-logo img {
   height: 120px;
-  border-radius: 50%;
   object-fit: cover;
   border: 4px solid #fff;
 }
