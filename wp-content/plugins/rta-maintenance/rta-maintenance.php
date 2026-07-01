@@ -13,8 +13,9 @@ function rta_maintenance_mode() {
         return;
     }
 
-    wp_die(
-        '<!DOCTYPE html>
+    $logo_url = get_template_directory_uri() . '/logo.png';
+
+    wp_die('<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -28,24 +29,22 @@ function rta_maintenance_mode() {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #1a365d 0%, #2d5a7e 50%, #1a365d 100%);
+    background: linear-gradient(180deg, #b00000 0%, #c40000 50%, #8b0000 100%);
     color: #fff;
   }
   .container { text-align: center; padding: 2rem; max-width: 600px; }
   .logo {
-    width: 120px; height: 120px;
-    background: rgba(255,255,255,0.15);
+    width: 180px; height: 180px;
     border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
     margin: 0 auto 2rem;
-    font-size: 3rem;
-    backdrop-filter: blur(4px);
+    border: 4px solid #fff;
+    object-fit: cover;
   }
-  h1 { font-size: 2rem; margin-bottom: 1rem; font-weight: 700; }
+  h1 { font-size: 2rem; margin-bottom: 1rem; font-weight: 800; }
   p { font-size: 1.1rem; opacity: 0.9; line-height: 1.6; margin-bottom: 0.5rem; }
   .spinner {
     width: 48px; height: 48px; border: 4px solid rgba(255,255,255,0.2);
-    border-top-color: #fff; border-radius: 50%;
+    border-top-color: #ff6600; border-radius: 50%;
     animation: spin 1s linear infinite; margin: 2rem auto;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
@@ -53,7 +52,7 @@ function rta_maintenance_mode() {
 </head>
 <body>
 <div class="container">
-  <div class="logo">🚧</div>
+  <img src="' . esc_url($logo_url) . '" alt="Roteiro Turístico dos Aposentados" class="logo">
   <h1>Em Construção</h1>
   <p>Estamos preparando um novo visual para o</p>
   <p><strong>Roteiro Turístico dos Aposentados</strong></p>
@@ -61,8 +60,5 @@ function rta_maintenance_mode() {
   <p style="font-size:0.9rem;opacity:0.7">Em breve estaremos no ar com novidades!</p>
 </div>
 </body>
-</html>',
-        'Em Construção',
-        ['response' => 503]
-    );
+</html>', 'Em Construção', ['response' => 503]);
 }
