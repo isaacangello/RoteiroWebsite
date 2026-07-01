@@ -29,22 +29,21 @@ function rta_maintenance_mode() {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(180deg, #b00000 0%, #c40000 50%, #8b0000 100%);
-    color: #fff;
+    background: #f5f5f5;
+    color: #333;
   }
   .container { text-align: center; padding: 2rem; max-width: 600px; }
   .logo {
     width: 180px; height: 180px;
-    border-radius: 50%;
     margin: 0 auto 2rem;
-    border: 4px solid #fff;
-    object-fit: cover;
+    object-fit: contain;
   }
-  h1 { font-size: 2rem; margin-bottom: 1rem; font-weight: 800; }
-  p { font-size: 1.1rem; opacity: 0.9; line-height: 1.6; margin-bottom: 0.5rem; }
+  h1 { font-size: 2rem; margin-bottom: 1rem; font-weight: 800; color: #c40000; }
+  p { font-size: 1.1rem; opacity: 0.9; line-height: 1.6; margin-bottom: 0.5rem; color: #555; }
+  p strong { color: #333; }
   .spinner {
-    width: 48px; height: 48px; border: 4px solid rgba(255,255,255,0.2);
-    border-top-color: #ff6600; border-radius: 50%;
+    width: 48px; height: 48px; border: 4px solid #ddd;
+    border-top-color: #c40000; border-radius: 50%;
     animation: spin 1s linear infinite; margin: 2rem auto;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
