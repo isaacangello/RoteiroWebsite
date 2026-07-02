@@ -1,6 +1,6 @@
 # Changelog
 
-## 02/07/2026 (Sessão 4) — Menu responsivo off-canvas + Grid mobile
+## 02/07/2026 (Sessão 4) — Menu responsivo off-canvas + Grid mobile + Hotéis Fazenda
 
 ### Adicionado
 - **Drawer off-canvas**: hamburger abre/fecha drawer lateral com overlay, swipe gesture, submenus toggle no mobile
@@ -8,12 +8,15 @@
 - **navigation.js**: drawer toggle, swipe (touch/pointer), submenu toggle, escape key, resize auto-close
 - **Admin bar**: z-index do drawer e hamburger acima do admin bar (99999) quando logado
 - **Bind mounts nginx**: `wp-content/{themes,plugins,uploads,languages}` no container nginx para servir estáticos
+- **Página Hotéis Fazenda**: `/hoteis-fazenda/` com 10 regiões, listando hotéis fazenda com nome, cidade e destaques em tabelas
+- **Menu Macaé e Sana**: dois links separados sob "Região dos Lagos" (Macaé e Sana como itens filhos)
 
 ### Fix
 - **Drawer invisível**: z-index do drawer (999) estava abaixo do admin bar (99999) — corrigido para 100001
 - **Header mobile**: `.rta-header__inner` agora `width: 100%` (sem gaps laterais) em ≤1024px
 - **Search widget**: botão não transbordava — `flex-wrap: wrap` + `margin-left: 0`
 - **Grid mobile**: `min-width: 0` nos grid items (`sidebar-left`, `center`, `sidebar-right`) para evitar overflow do conteúdo dos widgets quando a tela é estreita
+- **Links quebrados**: `/hoteis-fazenda/` e `/sana-macae/` devolviam 404 — página criada e menu corrigido
 
 ## 01/07/2026 (Sessão 3) — Docker nginx + MariaDB 10.11 latin1 + Homepage real
 
