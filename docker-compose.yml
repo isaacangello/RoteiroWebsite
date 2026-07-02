@@ -8,6 +8,10 @@ services:
     volumes:
       - wordpress_data:/var/www/html:ro
       - ./.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./wp-content/themes:/var/www/html/wp-content/themes:ro
+      - ./wp-content/plugins:/var/www/html/wp-content/plugins:ro
+      - ./wp-content/uploads:/var/www/html/wp-content/uploads:ro
+      - ./wp-content/languages:/var/www/html/wp-content/languages:ro
     depends_on:
       - wordpress
     networks:

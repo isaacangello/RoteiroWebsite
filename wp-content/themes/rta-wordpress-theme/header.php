@@ -45,7 +45,23 @@
 		</div>
 	</div>
 </header>
-<nav class="rta-nav" aria-label="<?php esc_attr_e( 'Menu principal', 'rta' ); ?>">
+<button class="rta-menu-toggle" id="rta-menu-toggle"
+	aria-controls="rta-nav-drawer" aria-expanded="false"
+	aria-label="<?php esc_attr_e( 'Abrir menu', 'rta' ); ?>">
+	<span class="rta-hamburger-box">
+		<span class="rta-hamburger-inner"></span>
+	</span>
+</button>
+<nav class="rta-nav" id="rta-nav-drawer"
+	aria-label="<?php esc_attr_e( 'Menu principal', 'rta' ); ?>"
+	role="navigation">
+	<div class="rta-nav__header">
+		<span class="rta-nav__title"><?php esc_html_e( 'Menu', 'rta' ); ?></span>
+		<button class="rta-nav__close" id="rta-nav-close"
+			aria-label="<?php esc_attr_e( 'Fechar menu', 'rta' ); ?>">
+			&times;
+		</button>
+	</div>
 	<div class="rta-nav__inner">
 		<?php
 		wp_nav_menu(
@@ -60,4 +76,5 @@
 		?>
 	</div>
 </nav>
+<div class="rta-overlay" id="rta-overlay" aria-hidden="true"></div>
 <main class="rta-main" id="content">
