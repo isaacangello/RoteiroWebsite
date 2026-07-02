@@ -19,7 +19,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>O mais antigo parque nacional do Brasil, com Mata Atlântica de altitude e o Pico das Agulhas Negras.</p>
+<p>O mais antigo parque nacional do Brasil, criado em 1937. Localizado na Serra da Mantiqueira, protege 30.000 hectares de Mata Atlântica de altitude, campos rupestres e formações rochosas, abrigando o Pico das Agulhas Negras (2.792 m) e a cachoeira do Véu da Noiva.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 

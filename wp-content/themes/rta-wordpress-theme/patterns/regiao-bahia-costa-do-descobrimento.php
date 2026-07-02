@@ -19,7 +19,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Berço do Brasil, com praias paradisíacas, falésias coloridas, recifes de corais e vilarejos charmosos como Trancoso e Arraial d'Ajuda.</p>
+<p>Região histórica onde os portugueses desembarcaram em 1500, a Costa do Descobrimento reúne praias paradisíacas, falésias coloridas, recifes de corais e vilarejos charmosos como Trancoso e Arraial d'Ajuda, com rica cultura indígena Pataxó.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 

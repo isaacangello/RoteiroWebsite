@@ -19,7 +19,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Importantes santuários e centros de peregrinação católica do Brasil.</p>
+<p>Região que reúne importantes santuários e centros de peregrinação católica, com destaque para Aparecida (SP), que recebe cerca de 12 milhões de romeiros por ano, e o Santuário de Nossa Senhora da Conceição em Santana do Lourenço (MG).</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 

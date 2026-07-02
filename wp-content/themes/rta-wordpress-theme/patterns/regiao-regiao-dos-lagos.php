@@ -19,7 +19,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Litoral fluminense com praias de águas cristalinas, dunas, lagunas e vida noturna intensa.</p>
+<p>Uma das regiões mais procuradas do litoral fluminense, conhecida por praias de águas calmas e cristalinas, dunas, lagunas e intensa vida noturna. Compreende destinos como Arraial do Cabo (a "Capital do Mergulho"), Búzios e Cabo Frio.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 

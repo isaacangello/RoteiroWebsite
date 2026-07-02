@@ -19,7 +19,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Região histórica do Rio de Janeiro com fazendas centenárias do Ciclo do Café e arquitetura imperial.</p>
+<p>Região do sul do Rio de Janeiro que viveu o auge do Ciclo do Café no século XIX. Preserva fazendas históricas centenárias, com arquitetura imponente, senzalas, museus e enorme acervo cultural, principalmente em Vassouras, Valença e Conservatória.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 

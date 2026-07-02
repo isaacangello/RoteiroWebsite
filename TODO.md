@@ -110,11 +110,30 @@
 
 ---
 
+## SEO — CONCLUÍDO ✅
+
+- [x] Meta description tag dinâmica
+- [x] Open Graph tags (og:title, og:description, og:url, og:type, og:image, og:site_name, og:locale)
+- [x] Twitter Card tags (summary_large_image)
+- [x] Canonical URL
+- [x] JSON-LD structured data (Organization + WebSite com SearchAction)
+
+## Revisão de Textos — CONCLUÍDO ✅
+
+- [x] Descrições das 11 regiões enriquecidas com base nos arquivos de referência em `destinos/`
+- [x] Cada região agora tem 2-3 frases descritivas com dados históricos e geográficos
+
+## Deploy dev-preview — CONCLUÍDO ✅
+
+- [x] Commit e push para branch develop
+- [ ] Homologar em https://preview.roteiroturisticodosaposentados.com
+- [ ] Se aprovado, merge develop → main → produção
+
 ## Pendências
 
 - **Cidades órfãs:** 11 cidades sem região pai (post_parent = 0) — podem quebrar URLs hierárquicas
 - **Menu:** Adicionar Sobre Nós, Fale Conosco e Últimas Notícias ao menu principal
-- **Backup do banco:** pendente (comando: `docker exec -i roteiro-db mysqldump -uroot -pPowerRoot26:) roteirot_wordpress | gzip > database/dump.sql.gz`)
+- **Backup do banco:** pendente
 
 ## Observações
 

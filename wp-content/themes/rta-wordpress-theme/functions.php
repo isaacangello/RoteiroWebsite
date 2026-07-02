@@ -541,3 +541,85 @@ function rta_redirect_alternate_slugs() {
 	}
 }
 add_action( 'template_redirect', 'rta_redirect_alternate_slugs' );
+
+/**
+ * Output SEO meta tags in <head>.
+ */
+function rta_seo_meta_tags() {
+	if ( is_admin() ) {
+		return;
+	}
+
+	$site_name = get_bloginfo( 'name' );
+	$tagline   = get_bloginfo( 'description' );
+	$url       = 'https://roteiroturisticodosaposentados.com';
+
+	if ( is_singular() ) {
+		$title       = wp_get_document_title();
+		$permalink   = get_permalink();
+		$excerpt     = get_the_excerpt();
+		$description = ! empty( $excerpt ) ? $excerpt : wp_trim_words( get_the_content(), 30, '…' );
+		$thumb_id    = get_post_thumbnail_id();
+		$image       = $thumb_id ? wp_get_attachment_image_url( $thumb_id, 'large' ) : '';
+	} elseif ( is_front_page() ) {
+		$title       = $site_name;
+		$description = $tagline;
+		$permalink   = home_url( '/' );
+		$image       = get_template_directory_uri() . '/favicon-512.png';
+	} else {
+		$title       = wp_get_document_title();
+		$permalink   = '';
+		$description = $tagline;
+		$image       = '';
+	}
+	?>
+	<meta name="description" content="<?php echo esc_attr( $description ); ?>">
+	<link rel="canonical" href="<?php echo esc_url( $permalink ?: home_url( add_query_arg( array(), $url ) ) ); ?>">
+
+	<meta property="og:title" content="<?php echo esc_attr( $title ); ?>">
+	<meta property="og:description" content="<?php echo esc_attr( $description ); ?>">
+	<meta property="og:url" content="<?php echo esc_url( $permalink ); ?>">
+	<meta property="og:type" content="<?php echo is_front_page() ? 'website' : 'article'; ?>">
+	<meta property="og:site_name" content="<?php echo esc_attr( $site_name ); ?>">
+	<meta property="og:locale" content="pt_BR">
+	<?php if ( $image ) : ?>
+	<meta property="og:image" content="<?php echo esc_url( $image ); ?>">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="630">
+	<?php endif; ?>
+
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="<?php echo esc_attr( $title ); ?>">
+	<meta name="twitter:description" content="<?php echo esc_attr( $description ); ?>">
+	<?php if ( $image ) : ?>
+	<meta name="twitter:image" content="<?php echo esc_url( $image ); ?>">
+	<?php endif; ?>
+
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "Organization",
+		"name": "<?php echo esc_js( $site_name ); ?>",
+		"url": "<?php echo esc_url( $url ); ?>",
+		"logo": "<?php echo esc_js( get_template_directory_uri() . '/logo.png' ); ?>",
+		"description": "<?php echo esc_js( $tagline ); ?>"
+	}
+	</script>
+
+	<script type="application/ld+json">
+	{
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		"name": "<?php echo esc_js( $site_name ); ?>",
+		"url": "<?php echo esc_url( $url ); ?>",
+		"description": "<?php echo esc_js( $tagline ); ?>",
+		"potentialAction": {
+			"@type": "SearchAction",
+			"target": "<?php echo esc_js( home_url( '/?s={search_term}' ) ); ?>",
+			"query-input": "required name=search_term"
+		}
+	}
+	</script>
+	<?php
+}
+add_action( 'wp_head', 'rta_seo_meta_tags', 1 );

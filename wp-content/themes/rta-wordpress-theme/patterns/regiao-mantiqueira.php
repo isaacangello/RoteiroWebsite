@@ -19,7 +19,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Cadeia montanhosa que reúne destinos de montanha com clima ameno, ecoturismo e gastronomia típica.</p>
+<p>A Serra da Mantiqueira é uma das cadeias montanhosas mais importantes do Brasil, estendendo-se por Minas Gerais, São Paulo e Rio de Janeiro. Reúne destinos de montanha com clima ameno, paisagens deslumbrantes, ecoturismo e a única estação de esqui do país em Passa Quatro.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 

@@ -19,7 +19,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Litoral Sul do Rio de Janeiro com praias paradisíacas, Mata Atlântica preservada e cidades históricas.</p>
+<p>Litoral Sul do Rio de Janeiro com praias paradisíacas, Mata Atlântica preservada, ilhas e montanhas que encontram o mar. Compreende Angra dos Reis, Paraty (Patrimônio Mundial pela UNESCO) e Mangaratiba, com inúmeras ilhas e praias selvagens.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 

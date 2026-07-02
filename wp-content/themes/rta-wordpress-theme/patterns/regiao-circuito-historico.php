@@ -19,7 +19,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Cidades centenárias do Sul de Minas com arquitetura colonial, igrejas barrocas, museus e fazendas históricas.</p>
+<p>Região do Sul de Minas Gerais que preserva o legado dos bandeirantes, tropeiros e do ciclo do café e da mineração. Cidades centenárias com arquitetura colonial, igrejas barrocas, museus e fazendas históricas aguardam sua visita.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 

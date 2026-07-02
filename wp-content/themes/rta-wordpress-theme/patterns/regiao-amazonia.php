@@ -19,7 +19,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>A maior floresta tropical do mundo, com biodiversidade incomparável, rios majestosos, comunidades ribeirinhas e experiências únicas de ecoturismo.</p>
+<p>A maior floresta tropical do mundo, a Amazônia brasileira cobre mais de 5 milhões de km² e se estende por 9 estados. Um destino de ecoturismo incomparável, com biodiversidade exuberante, rios majestosos, comunidades ribeirinhas e experiências únicas de contato com a natureza.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 

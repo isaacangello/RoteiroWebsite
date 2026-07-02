@@ -19,7 +19,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Região do Sul de Minas Gerais com fontes de águas minerais e termais, parques das águas e gastronomia mineira.</p>
+<p>Região turística do Sul de Minas Gerais que reúne 16 municípios conhecidos por suas fontes de águas minerais e termais com propriedades terapêuticas. Um destino perfeito para relaxamento, bem-estar, gastronomia mineira e contato com a natureza.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 

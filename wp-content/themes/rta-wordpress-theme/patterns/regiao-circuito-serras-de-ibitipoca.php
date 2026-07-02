@@ -19,7 +19,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p>Parque Estadual do Ibitipoca com formações rochosas, cavernas, grutas e cachoeiras de águas cristalinas.</p>
+<p>Região da Zona da Mata Mineira que tem como principal atrativo o Parque Estadual do Ibitipoca, um dos parques mais visitados de Minas Gerais. Conhecido por suas formações rochosas de quartzito, cavernas, grutas, cachoeiras de águas cristalinas e piscinas naturais.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 
