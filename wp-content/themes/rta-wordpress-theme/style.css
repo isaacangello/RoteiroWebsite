@@ -744,6 +744,13 @@ img {
     grid-template-columns: 1fr;
   }
 
+  .rta-sidebar-left,
+  .rta-center,
+  .rta-sidebar-right {
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+
   /* Search widget: prevent button overflow on narrow screens */
   .widget_search .wp-block-search__inside-wrapper {
     flex-wrap: wrap;
