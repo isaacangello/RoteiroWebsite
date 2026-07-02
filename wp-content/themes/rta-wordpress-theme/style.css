@@ -655,6 +655,17 @@ img {
   }
 }
 
+/* Drawer and overlay must stack above admin bar (z-index 99999) */
+.admin-bar .rta-nav--open {
+  z-index: 100001 !important;
+}
+.admin-bar .rta-overlay--visible {
+  z-index: 100000 !important;
+}
+.admin-bar .rta-menu-toggle {
+  z-index: 100002;
+}
+
 /* Drawer header (title + close) */
 .rta-nav__header {
   display: none;
