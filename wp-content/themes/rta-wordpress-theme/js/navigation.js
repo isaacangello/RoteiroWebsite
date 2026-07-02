@@ -1,9 +1,9 @@
 (function () {
   'use strict';
 
-  var BREAKPOINT = 1024;
-  var SWIPE_THRESHOLD = 80;
-  var drawerOpen = false;
+  var BREAKPOINT     = 1024;
+  var SWIPE_DISTANCE = 60;
+  var EDGE_THRESHOLD = 35;
 
   var toggle  = document.getElementById('rta-menu-toggle');
   var drawer  = document.getElementById('rta-nav-drawer');
@@ -13,19 +13,191 @@
 
   if (!toggle || !drawer || !overlay || !menu) return;
 
-  // ─── Desktop hover (only above breakpoint) ──────────────
-  var submenus = menu.querySelectorAll('.sub-menu');
-  var items   = menu.querySelectorAll('.menu-item-has-children');
+  var open = false;
 
-  submenus.forEach(function (sub) {
-    sub.style.display = 'none';
-  });
+  // ─── utils ────────────────────────────────────────────
 
   function isDesktop() {
     return window.innerWidth > BREAKPOINT;
   }
 
-  // Desktop hover events
+  function setTranslate(x) {
+    drawer.style.transform = 'translate3d(' + x + 'px, 0, 0)';
+  }
+
+  function getTranslate() {
+    var style  = window.getComputedStyle(drawer);
+    var matrix = style.transform.match(/matrix\(([^)]+)\)/);
+    if (!matrix) return 0;
+    return parseFloat(matrix[1].split(', ')[4]) || 0;
+  }
+
+  // ─── open / close ─────────────────────────────────────
+
+  function openDrawer() {
+    if (open) return;
+    open = true;
+    drawer.classList.add('rta-nav--open');
+    setTranslate(0);
+    overlay.classList.add('rta-overlay--visible');
+    toggle.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('rta-no-scroll');
+    closeBtn.focus();
+  }
+
+  function closeDrawer() {
+    if (!open) return;
+    open = false;
+    drawer.classList.remove('rta-nav--open');
+    setTranslate(-280);
+    overlay.classList.remove('rta-overlay--visible');
+    toggle.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('rta-no-scroll');
+    toggle.focus();
+  }
+
+  // ─── hamburger button ─────────────────────────────────
+
+  toggle.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (open) { closeDrawer(); }
+    else      { openDrawer();  }
+  });
+
+  closeBtn.addEventListener('click', closeDrawer);
+  overlay.addEventListener('click', closeDrawer);
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && open) closeDrawer();
+  });
+
+  // close on resize past breakpoint
+  var resizeTimer;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () {
+      if (isDesktop() && open) closeDrawer();
+    }, 150);
+  });
+
+  // ─── swipe / drag (touch + pointer for desktop testing) ─
+
+  var startX = 0, startY = 0;
+  var tracking = false;
+  var dir = null; // 'h' | 'v'
+
+  // ---- touch (mobile native) ----
+  document.addEventListener('touchstart', function (e) {
+    if (isDesktop()) return;
+    var t = e.changedTouches[0];
+    startX = t.clientX;
+    startY = t.clientY;
+    tracking = true;
+    dir = null;
+  }, { passive: true });
+
+  document.addEventListener('touchmove', function (e) {
+    if (!tracking || isDesktop()) return;
+    var t = e.changedTouches[0];
+    var dx = t.clientX - startX;
+    var dy = t.clientY - startY;
+
+    if (!dir) {
+      if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+      dir = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
+    }
+
+    if (dir !== 'h') return;
+    e.preventDefault();
+
+    if (open) {
+      var nx = Math.min(0, dx);
+      setTranslate(nx);
+    } else {
+      if (startX < EDGE_THRESHOLD && dx > 0) {
+        setTranslate(dx - 280);
+      }
+    }
+  }, { passive: false });
+
+  document.addEventListener('touchend', function (e) {
+    if (!tracking) return;
+    tracking = false;
+    if (dir !== 'h') return;
+    var dx = e.changedTouches[0].clientX - startX;
+
+    if (open) {
+      if (dx < -SWIPE_DISTANCE) closeDrawer();
+      else openDrawer();
+    } else {
+      if (dx > SWIPE_DISTANCE) openDrawer();
+      else setTranslate(-280);
+    }
+    dir = null;
+  });
+
+  // ---- pointer (desktop mouse, fallback) ----
+  document.addEventListener('pointerdown', function (e) {
+    if (isDesktop()) return;
+    startX = e.clientX;
+    startY = e.clientY;
+    tracking = true;
+    dir = null;
+  });
+
+  document.addEventListener('pointermove', function (e) {
+    if (!tracking || isDesktop()) return;
+    var dx = e.clientX - startX;
+    var dy = e.clientY - startY;
+
+    if (!dir) {
+      if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+      dir = Math.abs(dx) > Math.abs(dy) ? 'h' : 'v';
+    }
+
+    if (dir !== 'h') {
+      // if movement is mostly vertical, stop tracking
+      tracking = false;
+      return;
+    }
+    e.preventDefault();
+
+    if (open) {
+      setTranslate(Math.min(0, dx));
+    } else {
+      if (startX < EDGE_THRESHOLD && dx > 0) {
+        setTranslate(dx - 280);
+      }
+    }
+  });
+
+  document.addEventListener('pointerup', function (e) {
+    if (!tracking) return;
+    tracking = false;
+    if (dir !== 'h') return;
+    var dx = e.clientX - startX;
+
+    if (open) {
+      if (dx < -SWIPE_DISTANCE) closeDrawer();
+      else openDrawer();
+    } else {
+      if (dx > SWIPE_DISTANCE) openDrawer();
+      else setTranslate(-280);
+    }
+    dir = null;
+  });
+
+  // ─── desktop hover submenus ───────────────────────────
+
+  var items = menu.querySelectorAll('.menu-item-has-children');
+
+  // initial hide (only on desktop – mobile hides via CSS)
+  if (isDesktop()) {
+    menu.querySelectorAll('.sub-menu').forEach(function (s) {
+      s.style.display = 'none';
+    });
+  }
+
   menu.addEventListener('mouseover', function (e) {
     if (!isDesktop()) return;
     var item = e.target.closest('.menu-item-has-children');
@@ -54,21 +226,21 @@
     }
   });
 
-  // ─── Submenu toggle (mobile: tap to open/close) ──────
+  // ─── mobile submenu toggle (tap) ──────────────────────
+
   items.forEach(function (item) {
     var link = item.querySelector('a');
     if (!link) return;
+    var sub = item.querySelector('.sub-menu');
+    if (!sub) return;
 
     link.addEventListener('click', function (e) {
       if (isDesktop()) return;
-      var sub = item.querySelector('.sub-menu');
-      if (!sub) return;
-
       e.preventDefault();
 
-      var isOpen = item.classList.contains('rta-menu-open');
+      var wasOpen = item.classList.contains('rta-menu-open');
 
-      // Close all others
+      // close siblings
       items.forEach(function (other) {
         if (other !== item) {
           other.classList.remove('rta-menu-open');
@@ -77,8 +249,7 @@
         }
       });
 
-      // Toggle this one
-      if (isOpen) {
+      if (wasOpen) {
         item.classList.remove('rta-menu-open');
         sub.style.display = 'none';
       } else {
@@ -86,149 +257,5 @@
         sub.style.display = 'block';
       }
     });
-  });
-
-  // ─── Drawer: open / close ─────────────────────────────
-  function openDrawer() {
-    if (drawerOpen) return;
-    drawerOpen = true;
-    drawer.classList.add('rta-nav--open');
-    overlay.classList.add('rta-overlay--visible');
-    toggle.setAttribute('aria-expanded', 'true');
-    toggle.setAttribute('aria-label', 'Fechar menu');
-    document.body.classList.add('rta-no-scroll');
-    closeBtn.focus();
-  }
-
-  function closeDrawer() {
-    if (!drawerOpen) return;
-    drawerOpen = false;
-    drawer.classList.remove('rta-nav--open');
-    drawer.style.transform = '';
-    overlay.classList.remove('rta-overlay--visible');
-    toggle.setAttribute('aria-expanded', 'false');
-    toggle.setAttribute('aria-label', 'Abrir menu');
-    document.body.classList.remove('rta-no-scroll');
-    toggle.focus();
-  }
-
-  // Hamburger click
-  toggle.addEventListener('click', function () {
-    if (drawerOpen) {
-      closeDrawer();
-    } else {
-      openDrawer();
-    }
-  });
-
-  // Close button
-  closeBtn.addEventListener('click', closeDrawer);
-
-  // Overlay click
-  overlay.addEventListener('click', closeDrawer);
-
-  // Escape key
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && drawerOpen) {
-      closeDrawer();
-    }
-  });
-
-  // Close on resize to desktop
-  window.addEventListener('resize', function () {
-    if (isDesktop() && drawerOpen) {
-      closeDrawer();
-    }
-  });
-
-  // ─── Swipe / Drag gesture (Pointer Events) ────────────
-  var dragStartX = 0;
-  var dragStartY = 0;
-  var isDragging = false;
-  var dragDirection = null; // 'horizontal' | 'vertical'
-
-  function getTranslateX(el) {
-    var style = window.getComputedStyle(el);
-    var transform = style.transform;
-    if (transform === 'none') return 0;
-    var matrix = transform.match(/matrix\(([^)]+)\)/);
-    if (matrix) {
-      var values = matrix[1].split(', ');
-      return parseFloat(values[4]) || 0;
-    }
-    return 0;
-  }
-
-  function setDrawerTranslate(x) {
-    drawer.style.transform = 'translate3d(' + x + 'px, 0, 0)';
-  }
-
-  // Swipe from left edge: open drawer
-  document.addEventListener('pointerdown', function (e) {
-    if (isDesktop()) return;
-    // Only track if starting near left edge (within 40px) or if drawer is open
-    if (e.clientX < 40 || drawerOpen) {
-      dragStartX = e.clientX;
-      dragStartY = e.clientY;
-      isDragging = true;
-      dragDirection = null;
-      drawer.setPointerCapture(e.pointerId);
-    }
-  });
-
-  document.addEventListener('pointermove', function (e) {
-    if (!isDragging || isDesktop()) return;
-
-    var dx = e.clientX - dragStartX;
-    var dy = e.clientY - dragStartY;
-
-    // Determine direction on first significant move
-    if (!dragDirection) {
-      if (Math.abs(dx) > 10 || Math.abs(dy) > 10) {
-        dragDirection = Math.abs(dx) > Math.abs(dy) ? 'horizontal' : 'vertical';
-      }
-    }
-
-    if (dragDirection !== 'horizontal') return;
-
-    e.preventDefault();
-
-    if (drawerOpen) {
-      // Dragging drawer closed: constrain dx to negative values
-      var translate = Math.min(0, dx);
-      setDrawerTranslate(translate);
-    } else {
-      // Dragging from left edge to open: allow only positive
-      if (dx > 0) {
-        setDrawerTranslate(dx - 280);
-      }
-    }
-  });
-
-  document.addEventListener('pointerup', function (e) {
-    if (!isDragging) return;
-    isDragging = false;
-
-    if (dragDirection !== 'horizontal') return;
-
-    var dx = e.clientX - dragStartX;
-
-    if (drawerOpen) {
-      if (dx < -SWIPE_THRESHOLD) {
-        closeDrawer();
-      } else {
-        setDrawerTranslate(0);
-        drawer.classList.add('rta-nav--open');
-      }
-    } else {
-      if (dx > SWIPE_THRESHOLD) {
-        openDrawer();
-      } else {
-        setDrawerTranslate(-280);
-        drawer.classList.remove('rta-nav--open');
-      }
-    }
-
-    dragDirection = null;
   });
 })();

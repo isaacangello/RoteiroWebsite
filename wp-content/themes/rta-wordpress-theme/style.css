@@ -289,7 +289,6 @@ img {
   line-height: 1;
 }
 
-
 .rta-main {
   width: var(--rta-max-width);
   margin: 0 auto;
@@ -483,10 +482,6 @@ img {
   font-size: 0.75rem;
 }
 
-    grid-template-columns: 1fr;
-  }
-}
-
 .rta-home-content {
   text-align: left;
   font-size: 0.85rem;
@@ -587,7 +582,7 @@ img {
   display: none;
   position: fixed;
   top: 12px;
-  right: 12px;
+  left: 12px;
   z-index: 1001;
   padding: 10px;
   background: var(--rta-red);
@@ -596,6 +591,8 @@ img {
   cursor: pointer;
   width: 44px;
   height: 44px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .rta-hamburger-box {
@@ -634,16 +631,16 @@ img {
 }
 
 /* Hamburger → X when open */
-[aria-expanded="true"] .rta-hamburger-inner {
+.rta-menu-toggle[aria-expanded="true"] .rta-hamburger-inner {
   transform: translateY(-50%) rotate(45deg);
 }
 
-[aria-expanded="true"] .rta-hamburger-inner::before {
+.rta-menu-toggle[aria-expanded="true"] .rta-hamburger-inner::before {
   opacity: 0;
   transform: translateY(8px);
 }
 
-[aria-expanded="true"] .rta-hamburger-inner::after {
+.rta-menu-toggle[aria-expanded="true"] .rta-hamburger-inner::after {
   transform: translateY(-8px) rotate(-90deg);
 }
 
@@ -683,20 +680,23 @@ img {
   display: none;
   position: fixed;
   inset: 0;
-  z-index: 999;
+  z-index: 998;
   background: rgba(0, 0, 0, 0.55);
   opacity: 0;
   transition: opacity 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .rta-overlay--visible {
-  display: block;
+  display: block !important;
   opacity: 1;
 }
 
 /* No scroll when drawer open */
 .rta-no-scroll {
-  overflow: hidden;
+  overflow: hidden !important;
+  position: fixed;
+  width: 100%;
 }
 
 /* ======================================================
@@ -716,22 +716,19 @@ img {
     grid-template-columns: 1fr;
   }
 
-  /* Hamburger visible */
   .rta-menu-toggle {
     display: block;
   }
 
-  /* Overlay visible when open, transition handled in JS */
   .rta-overlay--visible {
     display: block;
   }
 
-  /* Nav transforms into drawer */
   .rta-nav {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1000;
+    z-index: 999;
     width: 280px;
     height: 100vh;
     height: 100dvh;
@@ -796,7 +793,6 @@ img {
     display: block !important;
   }
 
-  /* Touch-friendly submenu links */
   .rta-nav__inner .rta-menu .sub-menu a {
     padding: 10px 14px;
     font-size: 0.78rem;
