@@ -9,20 +9,25 @@
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" href="<?php echo esc_url( get_template_directory_uri() . '/favicon.ico' ); ?>" sizes="48x48">
-	<link rel="icon" href="<?php echo esc_url( get_template_directory_uri() . '/favicon-16x16.png' ); ?>" sizes="16x16" type="image/png">
-	<link rel="icon" href="<?php echo esc_url( get_template_directory_uri() . '/favicon-32x32.png' ); ?>" sizes="32x32" type="image/png">
-	<link rel="icon" href="<?php echo esc_url( get_template_directory_uri() . '/favicon-96x96.png' ); ?>" sizes="96x96" type="image/png">
-	<link rel="icon" href="<?php echo esc_url( get_template_directory_uri() . '/favicon-512.png' ); ?>" sizes="512x512" type="image/png">
-	<link rel="apple-touch-icon" href="<?php echo esc_url( get_template_directory_uri() . '/apple-touch-icon-180x180.png' ); ?>">
-	<link rel="apple-touch-icon" sizes="60x60" href="<?php echo esc_url( get_template_directory_uri() . '/apple-touch-icon-60x60.png' ); ?>">
-	<link rel="apple-touch-icon" sizes="76x76" href="<?php echo esc_url( get_template_directory_uri() . '/apple-touch-icon-76x76.png' ); ?>">
-	<link rel="apple-touch-icon" sizes="120x120" href="<?php echo esc_url( get_template_directory_uri() . '/apple-touch-icon-120x120.png' ); ?>">
-	<link rel="apple-touch-icon" sizes="152x152" href="<?php echo esc_url( get_template_directory_uri() . '/apple-touch-icon-152x152.png' ); ?>">
-	<link rel="apple-touch-icon" sizes="180x180" href="<?php echo esc_url( get_template_directory_uri() . '/apple-touch-icon-180x180.png' ); ?>">
-	<link rel="manifest" href="<?php echo esc_url( get_template_directory_uri() . '/site.webmanifest' ); ?>">
+	<?php
+	$theme_uri = get_template_directory_uri();
+	$theme_dir = get_template_directory();
+	$v = '?v=' . filemtime( $theme_dir . '/favicon-512.png' );
+	?>
+	<link rel="icon" href="<?php echo esc_url( $theme_uri . '/favicon.ico' . $v ); ?>" sizes="48x48">
+	<link rel="icon" href="<?php echo esc_url( $theme_uri . '/favicon-16x16.png' . $v ); ?>" sizes="16x16" type="image/png">
+	<link rel="icon" href="<?php echo esc_url( $theme_uri . '/favicon-32x32.png' . $v ); ?>" sizes="32x32" type="image/png">
+	<link rel="icon" href="<?php echo esc_url( $theme_uri . '/favicon-96x96.png' . $v ); ?>" sizes="96x96" type="image/png">
+	<link rel="icon" href="<?php echo esc_url( $theme_uri . '/favicon-512.png' . $v ); ?>" sizes="512x512" type="image/png">
+	<link rel="apple-touch-icon" href="<?php echo esc_url( $theme_uri . '/apple-touch-icon-180x180.png' . $v ); ?>">
+	<link rel="apple-touch-icon" sizes="60x60" href="<?php echo esc_url( $theme_uri . '/apple-touch-icon-60x60.png' . $v ); ?>">
+	<link rel="apple-touch-icon" sizes="76x76" href="<?php echo esc_url( $theme_uri . '/apple-touch-icon-76x76.png' . $v ); ?>">
+	<link rel="apple-touch-icon" sizes="120x120" href="<?php echo esc_url( $theme_uri . '/apple-touch-icon-120x120.png' . $v ); ?>">
+	<link rel="apple-touch-icon" sizes="152x152" href="<?php echo esc_url( $theme_uri . '/apple-touch-icon-152x152.png' . $v ); ?>">
+	<link rel="apple-touch-icon" sizes="180x180" href="<?php echo esc_url( $theme_uri . '/apple-touch-icon-180x180.png' . $v ); ?>">
+	<link rel="manifest" href="<?php echo esc_url( $theme_uri . '/site.webmanifest' . $v ); ?>">
 	<meta name="msapplication-TileColor" content="#c40000">
-	<meta name="msapplication-TileImage" content="<?php echo esc_url( get_template_directory_uri() . '/mstile-150x150.png' ); ?>">
+	<meta name="msapplication-TileImage" content="<?php echo esc_url( $theme_uri . '/mstile-150x150.png' . $v ); ?>">
 	<meta name="theme-color" content="#c40000">
 	<?php wp_head(); ?>
 </head>
